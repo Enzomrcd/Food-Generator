@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   // --------------------------------------------------
-  // Enhanced Food Idea Generator Code with Updated Selection Logic
+  // Enhanced Food Idea Generator Code with Persistent Selections
   // --------------------------------------------------
 
   // Expanded Database of common ingredients with categories
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
     { name: "Oregano", category: "herbs" }
   ];
 
-  // Extract common ingredient names for comparison
+  // Extract common ingredient names for later comparison
   const commonIngredients = ingredientDatabase.map(item => item.name);
 
   // Expanded Database of recipes with required ingredients
@@ -161,20 +161,22 @@ document.addEventListener("DOMContentLoaded", function () {
   // -------------------------------
   // Variables for tracking state
   // -------------------------------
-  // Global array to hold selected ingredients
+  // Global array to hold selected ingredients (acting like a cart)
   let selectedIngredients = [];
   let activeCategory = "all";
   let searchTerm = "";
-
-  // Minimum match threshold for a recipe to be considered (in percentage)
+  // Minimum match threshold (in percentage)
   const minMatchThreshold = 40;
 
   // Load ingredients into the list while preserving global selection
   function loadIngredients() {
     ingredientsList.innerHTML = "";
     const filteredIngredients = ingredientDatabase.filter(ingredient => {
-      const matchesCategory = activeCategory === "all" || ingredient.category === activeCategory;
-      const matchesSearch = searchTerm === "" || ingredient.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory =
+        activeCategory === "all" || ingredient.category === activeCategory;
+      const matchesSearch =
+        searchTerm === "" ||
+        ingredient.name.toLowerCase().includes(searchTerm.toLowerCase());
       return matchesCategory && matchesSearch;
     });
     filteredIngredients.sort((a, b) => a.name.localeCompare(b.name));
@@ -186,18 +188,20 @@ document.addEventListener("DOMContentLoaded", function () {
       checkbox.type = "checkbox";
       checkbox.id = `ing-${ingredient.name.toLowerCase().replace(/\s/g, "-")}`;
       checkbox.value = ingredient.name;
-      // Set checked state based on global array
+      // Set checked state based on global selection
       if (selectedIngredients.includes(ingredient.name)) {
         checkbox.checked = true;
       }
-      // Update global array on change without recalculating from DOM
+      // Update global selection on checkbox change
       checkbox.addEventListener("change", () => {
         if (checkbox.checked) {
           if (!selectedIngredients.includes(checkbox.value)) {
             selectedIngredients.push(checkbox.value);
           }
         } else {
-          selectedIngredients = selectedIngredients.filter(item => item !== checkbox.value);
+          selectedIngredients = selectedIngredients.filter(
+            (item) => item !== checkbox.value
+          );
         }
         updateSelectedDisplay();
       });
@@ -213,33 +217,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (filteredIngredients.length === 0) {
       const noResultsDiv = document.createElement("div");
-      noResultsDiv.textContent = "No ingredients found. Try a different search or category.";
+      noResultsDiv.textContent =
+        "No ingredients found. Try a different search or category.";
       noResultsDiv.style.padding = "1rem";
       noResultsDiv.style.color = "#666";
       ingredientsList.appendChild(noResultsDiv);
     }
   }
 
-  // Update the display of selected ingredients (tags) from the global array
+  // Update the display of selected ingredients (cart-like)
   function updateSelectedDisplay() {
     if (selectedIngredients.length > 0) {
       selectedIngredientsDisplay.innerHTML = "";
-      selectedIngredients.forEach(ingredient => {
+      selectedIngredients.forEach((ingredient) => {
         const tag = document.createElement("span");
         tag.className = "selected-tag";
         tag.textContent = ingredient;
+
         const removeBtn = document.createElement("span");
         removeBtn.textContent = " ×";
         removeBtn.style.cursor = "pointer";
         removeBtn.style.marginLeft = "3px";
         removeBtn.addEventListener("click", () => {
-          // Uncheck the corresponding checkbox (if visible)
-          const checkbox = document.getElementById(`ing-${ingredient.toLowerCase().replace(/\s/g, "-")}`);
+          // If the checkbox is visible, uncheck it
+          const checkbox = document.getElementById(
+            `ing-${ingredient.toLowerCase().replace(/\s/g, "-")}`
+          );
           if (checkbox) {
             checkbox.checked = false;
           }
           // Remove from global selection and update display
-          selectedIngredients = selectedIngredients.filter(item => item !== ingredient);
+          selectedIngredients = selectedIngredients.filter(
+            (item) => item !== ingredient
+          );
           updateSelectedDisplay();
         });
         tag.appendChild(removeBtn);
@@ -264,7 +274,8 @@ document.addEventListener("DOMContentLoaded", function () {
       successMsg.textContent = `Added ${ingredientName}!`;
       successMsg.style.color = "green";
       successMsg.style.marginLeft = "10px";
-      const customIngredientContainer = document.querySelector(".custom-ingredient");
+      const customIngredientContainer =
+        document.querySelector(".custom-ingredient");
       customIngredientContainer.appendChild(successMsg);
       setTimeout(() => {
         if (customIngredientContainer.contains(successMsg)) {
@@ -274,7 +285,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Dummy nutrition calculation based on number of ingredients
+  // Dummy nutrition calculation based on recipe ingredients
   function getNutritionInfo(recipe) {
     const baseCal = 300;
     const calories = baseCal + recipe.ingredients.length * 50;
@@ -284,28 +295,31 @@ document.addEventListener("DOMContentLoaded", function () {
     return `Estimated Calories: ${calories} kcal | Protein: ${protein}g | Carbs: ${carbs}g | Fat: ${fat}g`;
   }
 
-  // Generate food ideas based on the selected ingredients with improved accuracy
+  // Generate food ideas based on the selected ingredients
   function generateFoodIdeas() {
     if (selectedIngredients.length === 0) {
       alert("Please select at least one ingredient");
       return;
     }
     const possibleRecipes = [];
-    recipeDatabase.forEach(recipe => {
+    recipeDatabase.forEach((recipe) => {
       const requiredIngredients = recipe.ingredients;
       const missingIngredients = requiredIngredients.filter(
-        ingredient => !selectedIngredients.includes(ingredient)
+        (ingredient) => !selectedIngredients.includes(ingredient)
       );
       const matchPercentage =
-        ((requiredIngredients.length - missingIngredients.length) / requiredIngredients.length) * 100;
+        ((requiredIngredients.length - missingIngredients.length) /
+          requiredIngredients.length) *
+        100;
       if (matchPercentage >= minMatchThreshold) {
         possibleRecipes.push({
           ...recipe,
           matchPercentage,
-          missing: missingIngredients
+          missing: missingIngredients,
         });
       }
     });
+    // Sort recipes by match percentage (highest first)
     possibleRecipes.sort((a, b) => b.matchPercentage - a.matchPercentage);
     displayResults(possibleRecipes);
   }
@@ -318,30 +332,46 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
     noResultsMessage.style.display = "none";
-    recipes.forEach(recipe => {
+    recipes.forEach((recipe) => {
       const card = document.createElement("div");
       card.className = "recipe-card";
+
       const matchSpan = document.createElement("span");
       matchSpan.className = "recipe-match";
       matchSpan.textContent =
-        recipe.matchPercentage === 100 ? "Perfect Match!" : `${Math.round(recipe.matchPercentage)}% Match`;
+        recipe.matchPercentage === 100
+          ? "Perfect Match!"
+          : `${Math.round(recipe.matchPercentage)}% Match`;
+
       const title = document.createElement("h3");
       title.className = "recipe-title";
       title.textContent = recipe.name;
+
       const ingredientsDiv = document.createElement("div");
       ingredientsDiv.className = "recipe-ingredients";
-      ingredientsDiv.innerHTML = `<strong>Required:</strong> ${recipe.ingredients.join(", ")}`;
+      ingredientsDiv.innerHTML = `<strong>Required:</strong> ${recipe.ingredients.join(
+        ", "
+      )}`;
+
       const description = document.createElement("p");
       description.textContent = recipe.description;
+
       const missing = document.createElement("p");
       if (recipe.missing.length > 0) {
-        missing.innerHTML = `<strong>Missing:</strong> ${recipe.missing.join(", ")}`;
+        missing.innerHTML = `<strong>Missing:</strong> ${recipe.missing.join(
+          ", "
+        )}`;
       } else {
-        missing.innerHTML = "<strong>Perfect! You have all the ingredients.</strong>";
+        missing.innerHTML =
+          "<strong>Perfect! You have all the ingredients.</strong>";
       }
+
       const nutritionInfo = document.createElement("p");
       nutritionInfo.className = "nutrition-info";
-      nutritionInfo.innerHTML = `<strong>Nutrition Info:</strong> ${getNutritionInfo(recipe)}`;
+      nutritionInfo.innerHTML = `<strong>Nutrition Info:</strong> ${getNutritionInfo(
+        recipe
+      )}`;
+
       card.appendChild(matchSpan);
       card.appendChild(title);
       card.appendChild(ingredientsDiv);
@@ -366,16 +396,16 @@ document.addEventListener("DOMContentLoaded", function () {
     searchTerm = ingredientSearchInput.value;
     loadIngredients();
   });
-  categoryTabs.forEach(tab => {
+  categoryTabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      categoryTabs.forEach(t => t.classList.remove("active"));
+      categoryTabs.forEach((t) => t.classList.remove("active"));
       tab.classList.add("active");
       activeCategory = tab.getAttribute("data-category");
       loadIngredients();
     });
   });
 
-  // Initial load of ingredients and update display
+  // Initial load of ingredients and update selected display
   loadIngredients();
   updateSelectedDisplay();
 
@@ -400,4 +430,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-                          
+    
