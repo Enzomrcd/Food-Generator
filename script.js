@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   // --------------------------------------------------
-  // Enhanced Food Idea Generator Code with Persistent Selections
+  // Enhanced Food Idea Generator Code with Filipino Options & Fallback
   // --------------------------------------------------
 
   // Expanded Database of common ingredients with categories
   const ingredientDatabase = [
+    // Existing ingredients
     { name: "Flour", category: "basics" },
     { name: "Sugar", category: "basics" },
     { name: "Salt", category: "basics" },
@@ -45,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
     { name: "Ketchup", category: "condiments" },
     { name: "Mayonnaise", category: "condiments" },
     { name: "Water", category: "basics" },
-    // New ingredients
+    // New international ingredients
     { name: "Quinoa", category: "basics" },
     { name: "Chickpeas", category: "proteins" },
     { name: "Broccoli", category: "produce" },
@@ -54,10 +55,19 @@ document.addEventListener("DOMContentLoaded", function () {
     { name: "Avocado", category: "produce" },
     { name: "Cucumber", category: "produce" },
     { name: "Basil", category: "herbs" },
-    { name: "Oregano", category: "herbs" }
+    { name: "Oregano", category: "herbs" },
+    // New Filipino-specific ingredients
+    { name: "Tamarind", category: "filipino" },
+    { name: "Bay Leaves", category: "filipino" },
+    { name: "Calamansi", category: "filipino" },
+    { name: "Coconut Milk", category: "filipino" },
+    { name: "Shrimp Paste", category: "filipino" },
+    { name: "Bagoong", category: "filipino" },
+    { name: "Taro Leaves", category: "filipino" },
+    { name: "Eggplant (Talas)", category: "filipino" }
   ];
 
-  // Extract common ingredient names for later comparison
+  // Extract common ingredient names for comparison
   const commonIngredients = ingredientDatabase.map(item => item.name);
 
   // Expanded Database of recipes with required ingredients
@@ -127,7 +137,27 @@ document.addEventListener("DOMContentLoaded", function () {
       ingredients: ["Flour", "Sugar", "Eggs", "Milk", "Butter", "Baking Powder"],
       description: "Simple muffins that you can add your own flavors to."
     },
-    // New recipes
+    // New Filipino Recipes
+    {
+      name: "Chicken Adobo",
+      ingredients: ["Chicken", "Soy Sauce", "Vinegar", "Garlic", "Bay Leaves", "Pepper"],
+      description: "A classic Filipino dish with tender chicken simmered in soy sauce and vinegar."
+    },
+    {
+      name: "Sinigang na Baboy",
+      ingredients: ["Pork", "Tamarind", "Tomatoes", "Onions", "Radish", "Eggplant", "Spinach"],
+      description: "A sour tamarind-based soup with pork and assorted vegetables."
+    },
+    {
+      name: "Kare-Kare",
+      ingredients: ["Oxtail", "Peanut Butter", "Eggplant (Talas)", "Green Beans", "Banana Flower", "Bagoong"],
+      description: "A rich Filipino stew with a savory peanut sauce served with bagoong."
+    },
+    {
+      name: "Laing",
+      ingredients: ["Taro Leaves", "Coconut Milk", "Chili", "Shrimp Paste"],
+      description: "A spicy and creamy dish made with taro leaves simmered in coconut milk."
+    },
     {
       name: "Quinoa Salad",
       ingredients: ["Quinoa", "Tomatoes", "Cucumber", "Lettuce", "Lemon", "Olive Oil", "Salt"],
@@ -161,7 +191,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // -------------------------------
   // Variables for tracking state
   // -------------------------------
-  // Global array to hold selected ingredients (acting like a cart)
   let selectedIngredients = [];
   let activeCategory = "all";
   let searchTerm = "";
@@ -183,42 +212,33 @@ document.addEventListener("DOMContentLoaded", function () {
     filteredIngredients.forEach(ingredient => {
       const item = document.createElement("div");
       item.className = "ingredient-item";
-
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.id = `ing-${ingredient.name.toLowerCase().replace(/\s/g, "-")}`;
       checkbox.value = ingredient.name;
-      // Set checked state based on global selection
       if (selectedIngredients.includes(ingredient.name)) {
         checkbox.checked = true;
       }
-      // Update global selection on checkbox change
       checkbox.addEventListener("change", () => {
         if (checkbox.checked) {
           if (!selectedIngredients.includes(checkbox.value)) {
             selectedIngredients.push(checkbox.value);
           }
         } else {
-          selectedIngredients = selectedIngredients.filter(
-            (item) => item !== checkbox.value
-          );
+          selectedIngredients = selectedIngredients.filter(item => item !== checkbox.value);
         }
         updateSelectedDisplay();
       });
-
       const label = document.createElement("label");
       label.htmlFor = checkbox.id;
       label.textContent = ingredient.name;
-
       item.appendChild(checkbox);
       item.appendChild(label);
       ingredientsList.appendChild(item);
     });
-
     if (filteredIngredients.length === 0) {
       const noResultsDiv = document.createElement("div");
-      noResultsDiv.textContent =
-        "No ingredients found. Try a different search or category.";
+      noResultsDiv.textContent = "No ingredients found. Try a different search or category.";
       noResultsDiv.style.padding = "1rem";
       noResultsDiv.style.color = "#666";
       ingredientsList.appendChild(noResultsDiv);
@@ -229,27 +249,20 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateSelectedDisplay() {
     if (selectedIngredients.length > 0) {
       selectedIngredientsDisplay.innerHTML = "";
-      selectedIngredients.forEach((ingredient) => {
+      selectedIngredients.forEach(ingredient => {
         const tag = document.createElement("span");
         tag.className = "selected-tag";
         tag.textContent = ingredient;
-
         const removeBtn = document.createElement("span");
         removeBtn.textContent = " ×";
         removeBtn.style.cursor = "pointer";
         removeBtn.style.marginLeft = "3px";
         removeBtn.addEventListener("click", () => {
-          // If the checkbox is visible, uncheck it
-          const checkbox = document.getElementById(
-            `ing-${ingredient.toLowerCase().replace(/\s/g, "-")}`
-          );
+          const checkbox = document.getElementById(`ing-${ingredient.toLowerCase().replace(/\s/g, "-")}`);
           if (checkbox) {
             checkbox.checked = false;
           }
-          // Remove from global selection and update display
-          selectedIngredients = selectedIngredients.filter(
-            (item) => item !== ingredient
-          );
+          selectedIngredients = selectedIngredients.filter(item => item !== ingredient);
           updateSelectedDisplay();
         });
         tag.appendChild(removeBtn);
@@ -274,8 +287,7 @@ document.addEventListener("DOMContentLoaded", function () {
       successMsg.textContent = `Added ${ingredientName}!`;
       successMsg.style.color = "green";
       successMsg.style.marginLeft = "10px";
-      const customIngredientContainer =
-        document.querySelector(".custom-ingredient");
+      const customIngredientContainer = document.querySelector(".custom-ingredient");
       customIngredientContainer.appendChild(successMsg);
       setTimeout(() => {
         if (customIngredientContainer.contains(successMsg)) {
@@ -285,7 +297,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Dummy nutrition calculation based on recipe ingredients
+  // Dummy nutrition calculation based on number of ingredients
   function getNutritionInfo(recipe) {
     const baseCal = 300;
     const calories = baseCal + recipe.ingredients.length * 50;
@@ -302,76 +314,51 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
     const possibleRecipes = [];
-    recipeDatabase.forEach((recipe) => {
+    recipeDatabase.forEach(recipe => {
       const requiredIngredients = recipe.ingredients;
-      const missingIngredients = requiredIngredients.filter(
-        (ingredient) => !selectedIngredients.includes(ingredient)
-      );
-      const matchPercentage =
-        ((requiredIngredients.length - missingIngredients.length) /
-          requiredIngredients.length) *
-        100;
+      const missingIngredients = requiredIngredients.filter(ingredient => !selectedIngredients.includes(ingredient));
+      const matchPercentage = ((requiredIngredients.length - missingIngredients.length) / requiredIngredients.length) * 100;
       if (matchPercentage >= minMatchThreshold) {
-        possibleRecipes.push({
-          ...recipe,
-          matchPercentage,
-          missing: missingIngredients,
-        });
+        possibleRecipes.push({ ...recipe, matchPercentage, missing: missingIngredients });
       }
     });
     // Sort recipes by match percentage (highest first)
     possibleRecipes.sort((a, b) => b.matchPercentage - a.matchPercentage);
-    displayResults(possibleRecipes);
+    // If no standard recipes match, provide a creative fallback
+    if (possibleRecipes.length === 0) {
+      displayFallback();
+    } else {
+      displayResults(possibleRecipes);
+    }
   }
 
-  // Display recipe results on the page with nutrition info
+  // Display standard recipe results with nutrition info
   function displayResults(recipes) {
     resultsContainer.innerHTML = "";
-    if (recipes.length === 0) {
-      noResultsMessage.style.display = "block";
-      return;
-    }
     noResultsMessage.style.display = "none";
-    recipes.forEach((recipe) => {
+    recipes.forEach(recipe => {
       const card = document.createElement("div");
       card.className = "recipe-card";
-
       const matchSpan = document.createElement("span");
       matchSpan.className = "recipe-match";
-      matchSpan.textContent =
-        recipe.matchPercentage === 100
-          ? "Perfect Match!"
-          : `${Math.round(recipe.matchPercentage)}% Match`;
-
+      matchSpan.textContent = recipe.matchPercentage === 100 ? "Perfect Match!" : `${Math.round(recipe.matchPercentage)}% Match`;
       const title = document.createElement("h3");
       title.className = "recipe-title";
       title.textContent = recipe.name;
-
       const ingredientsDiv = document.createElement("div");
       ingredientsDiv.className = "recipe-ingredients";
-      ingredientsDiv.innerHTML = `<strong>Required:</strong> ${recipe.ingredients.join(
-        ", "
-      )}`;
-
+      ingredientsDiv.innerHTML = `<strong>Required:</strong> ${recipe.ingredients.join(", ")}`;
       const description = document.createElement("p");
       description.textContent = recipe.description;
-
       const missing = document.createElement("p");
       if (recipe.missing.length > 0) {
-        missing.innerHTML = `<strong>Missing:</strong> ${recipe.missing.join(
-          ", "
-        )}`;
+        missing.innerHTML = `<strong>Missing:</strong> ${recipe.missing.join(", ")}`;
       } else {
-        missing.innerHTML =
-          "<strong>Perfect! You have all the ingredients.</strong>";
+        missing.innerHTML = "<strong>Perfect! You have all the ingredients.</strong>";
       }
-
       const nutritionInfo = document.createElement("p");
       nutritionInfo.className = "nutrition-info";
-      nutritionInfo.innerHTML = `<strong>Nutrition Info:</strong> ${getNutritionInfo(
-        recipe
-      )}`;
-
+      nutritionInfo.innerHTML = `<strong>Nutrition Info:</strong> ${getNutritionInfo(recipe)}`;
       card.appendChild(matchSpan);
       card.appendChild(title);
       card.appendChild(ingredientsDiv);
@@ -380,6 +367,22 @@ document.addEventListener("DOMContentLoaded", function () {
       card.appendChild(nutritionInfo);
       resultsContainer.appendChild(card);
     });
+  }
+
+  // Display a fallback card for creative suggestions when no standard recipe is found
+  function displayFallback() {
+    resultsContainer.innerHTML = "";
+    noResultsMessage.style.display = "none";
+    const card = document.createElement("div");
+    card.className = "recipe-card";
+    const title = document.createElement("h3");
+    title.className = "recipe-title";
+    title.textContent = "Creative Filipino Fusion Recipe";
+    const description = document.createElement("p");
+    description.innerHTML = "We couldn't find a standard recipe that matches your selected ingredients. Your combination is unique! Consider trying a creative Filipino fusion dish—experiment by combining flavors from traditional Filipino recipes with your ingredients. For inspiration, check out recipes on <a href='https://panlasangpinoy.com/' target='_blank'>Panlasang Pinoy</a>.";
+    card.appendChild(title);
+    card.appendChild(description);
+    resultsContainer.appendChild(card);
   }
 
   // -------------------------------
@@ -396,9 +399,9 @@ document.addEventListener("DOMContentLoaded", function () {
     searchTerm = ingredientSearchInput.value;
     loadIngredients();
   });
-  categoryTabs.forEach((tab) => {
+  categoryTabs.forEach(tab => {
     tab.addEventListener("click", () => {
-      categoryTabs.forEach((t) => t.classList.remove("active"));
+      categoryTabs.forEach(t => t.classList.remove("active"));
       tab.classList.add("active");
       activeCategory = tab.getAttribute("data-category");
       loadIngredients();
@@ -418,16 +421,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (donateBtn && donationModal && donationClose) {
     donateBtn.addEventListener("click", function () {
-      donationModal.style.display = "block"; // Show the donation modal
+      donationModal.style.display = "block";
     });
     donationClose.addEventListener("click", function () {
-      donationModal.style.display = "none"; // Hide the donation modal
+      donationModal.style.display = "none";
     });
     window.addEventListener("click", function (event) {
       if (event.target === donationModal) {
-        donationModal.style.display = "none"; // Hide modal if clicked outside
+        donationModal.style.display = "none";
       }
     });
   }
 });
-    
+     
