@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function () {
     { name: "Ketchup", category: "condiments" },
     { name: "Mayonnaise", category: "condiments" },
     { name: "Water", category: "basics" },
-    // New ingredients
     { name: "Quinoa", category: "basics" },
     { name: "Chickpeas", category: "proteins" },
     { name: "Broccoli", category: "produce" },
