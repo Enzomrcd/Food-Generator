@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mix & Dish - Food Idea Generator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Mix & Dish</h1>
+    <p class="app-description">Select the ingredients you have, and we'll suggest what you can make!</p>
+  </header>
+
+  <div class="container">
+    <section class="ingredients-section">
+      <h2>Select Your Ingredients</h2>
+
+      <div class="search-box">
+        <input type="text" id="ingredient-search" placeholder="Search ingredients..." />
+        <i>🔍</i>
+      </div>
+
+      <div class="ingredient-categories">
+        <div class="category-tabs" id="category-tabs">
+          <div class="category-tab active" data-category="all">All</div>
+          <div class="category-tab" data-category="basics">Basics</div>
+          <div class="category-tab" data-category="dairy">Dairy</div>
+          <div class="category-tab" data-category="proteins">Proteins</div>
+          <div class="category-tab" data-category="produce">Produce</div>
+          <div class="category-tab" data-category="baking">Baking</div>
+          <div class="category-tab" data-category="condiments">Condiments</div>
+        </div>
+      </div>
+
+      <div class="ingredients-container" id="ingredients-list">
+        <!-- Common ingredients will be loaded here -->
+      </div>
+
+      <div class="custom-ingredient">
+        <input type="text" id="custom-ingredient" placeholder="Add your own ingredient..." />
+        <button id="add-ingredient-btn">Add</button>
+      </div>
+
+      <div class="selected-ingredients" id="selected-ingredients">
+        <h3>Selected Ingredients:</h3>
+        <div id="selected-list">None selected yet</div>
+      </div>
+
+      <button class="generate-btn" id="generate-btn">Generate Food Ideas</button>
+    </section>
+
+    <section class="results-section">
+      <h2>Possible Dishes</h2>
+      <div class="results-list" id="results-container">
+        <div class="no-results" id="no-results">
+          <p>Select ingredients and click "Generate Food Ideas" to see what you can make!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Donation Section -->
+    <section class="donate-section">
+      <h2>Support My Work</h2>
+      <p>If you enjoy my website, please consider donating via GCash!</p>
+      <button id="donate-btn">Donate with GCash</button>
+    </section>
+  </div>
+
+  <footer>
+    <p>© Created by - Lorens Aron Mercado</p>
+    <a href="">My Github</a>
+  </footer>
+
+  <!-- Donation Modal -->
+  <div id="donation-modal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" id="donation-close">&times;</span>
+      <h2>Donate with GCash</h2>
+      <img src="gcash.jpeg" alt="GCash QR Code"/>
+      <p>Scan this QR code with your GCash app to donate. Thank you!</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
