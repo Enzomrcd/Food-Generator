@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   // --------------------------------------------------
-  // Food Idea Generator Code
+  // Enhanced Food Idea Generator Code
   // --------------------------------------------------
-  // Database of common ingredients with categories
+
+  // Expanded Database of common ingredients with categories
   const ingredientDatabase = [
     { name: "Flour", category: "basics" },
     { name: "Sugar", category: "basics" },
@@ -43,13 +44,23 @@ document.addEventListener("DOMContentLoaded", function () {
     { name: "Mustard", category: "condiments" },
     { name: "Ketchup", category: "condiments" },
     { name: "Mayonnaise", category: "condiments" },
-    { name: "Water", category: "basics" }
+    { name: "Water", category: "basics" },
+    // New ingredients
+    { name: "Quinoa", category: "basics" },
+    { name: "Chickpeas", category: "proteins" },
+    { name: "Broccoli", category: "produce" },
+    { name: "Zucchini", category: "produce" },
+    { name: "Eggplant", category: "produce" },
+    { name: "Avocado", category: "produce" },
+    { name: "Cucumber", category: "produce" },
+    { name: "Basil", category: "herbs" },
+    { name: "Oregano", category: "herbs" }
   ];
 
   // Extract common ingredient names for later comparison
   const commonIngredients = ingredientDatabase.map(item => item.name);
 
-  // Database of recipes with required ingredients
+  // Expanded Database of recipes with required ingredients
   const recipeDatabase = [
     {
       name: "Simple Chocolate Cake",
@@ -115,6 +126,22 @@ document.addEventListener("DOMContentLoaded", function () {
       name: "Basic Muffins",
       ingredients: ["Flour", "Sugar", "Eggs", "Milk", "Butter", "Baking Powder"],
       description: "Simple muffins that you can add your own flavors to."
+    },
+    // New recipes
+    {
+      name: "Quinoa Salad",
+      ingredients: ["Quinoa", "Tomatoes", "Cucumber", "Lettuce", "Lemon", "Olive Oil", "Salt"],
+      description: "A light and refreshing quinoa salad, perfect for a healthy lunch."
+    },
+    {
+      name: "Veggie Stir Fry",
+      ingredients: ["Broccoli", "Bell Peppers", "Onions", "Garlic", "Soy Sauce", "Olive Oil", "Rice"],
+      description: "A quick stir-fry packed with veggies served over rice."
+    },
+    {
+      name: "Chickpea Curry",
+      ingredients: ["Chickpeas", "Onions", "Garlic", "Tomatoes", "Spices", "Olive Oil", "Rice"],
+      description: "A hearty and flavorful chickpea curry served with rice."
     }
   ];
 
@@ -137,6 +164,9 @@ document.addEventListener("DOMContentLoaded", function () {
   let selectedIngredients = [];
   let activeCategory = "all";
   let searchTerm = "";
+
+  // Minimum match threshold for a recipe to be considered (in percentage)
+  const minMatchThreshold = 40;
 
   // Load ingredients into the list based on active category and search term
   function loadIngredients() {
@@ -247,6 +277,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Function to generate dummy nutrition info based on recipe ingredients
+  function getNutritionInfo(recipe) {
+    // For a more realistic approach, you could integrate with a nutrition API.
+    const baseCal = 300;
+    const calories = baseCal + recipe.ingredients.length * 50;
+    const protein = recipe.ingredients.length * 5;
+    const carbs = recipe.ingredients.length * 10;
+    const fat = recipe.ingredients.length * 3;
+    return `Estimated Calories: ${calories} kcal | Protein: ${protein}g | Carbs: ${carbs}g | Fat: ${fat}g`;
+  }
+
   // Generate food ideas based on the selected ingredients
   function generateFoodIdeas() {
     if (selectedIngredients.length === 0) {
@@ -264,7 +305,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const matchPercentage =
         ((requiredIngredients.length - missingIngredients.length) / requiredIngredients.length) * 100;
 
-      if (matchPercentage > 0) {
+      if (matchPercentage >= minMatchThreshold) {
         possibleRecipes.push({
           ...recipe,
           matchPercentage,
@@ -273,11 +314,12 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
+    // Sort recipes by match percentage (highest first)
     possibleRecipes.sort((a, b) => b.matchPercentage - a.matchPercentage);
     displayResults(possibleRecipes);
   }
 
-  // Display recipe results on the page
+  // Display recipe results on the page with nutrition info
   function displayResults(recipes) {
     resultsContainer.innerHTML = "";
 
@@ -294,7 +336,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const matchSpan = document.createElement("span");
       matchSpan.className = "recipe-match";
-      matchSpan.textContent = `${Math.round(recipe.matchPercentage)}% Match`;
+      matchSpan.textContent = recipe.matchPercentage === 100 
+        ? "Perfect Match!" 
+        : `${Math.round(recipe.matchPercentage)}% Match`;
 
       const title = document.createElement("h3");
       title.className = "recipe-title";
@@ -311,14 +355,20 @@ document.addEventListener("DOMContentLoaded", function () {
       if (recipe.missing.length > 0) {
         missing.innerHTML = `<strong>Missing:</strong> ${recipe.missing.join(", ")}`;
       } else {
-        missing.innerHTML = "<strong>Yay you have all the ingredients!</strong>";
+        missing.innerHTML = "<strong>Perfect! You have all the ingredients.</strong>";
       }
+
+      // Add Nutrition Info
+      const nutritionInfo = document.createElement("p");
+      nutritionInfo.className = "nutrition-info";
+      nutritionInfo.innerHTML = `<strong>Nutrition Info:</strong> ${getNutritionInfo(recipe)}`;
 
       card.appendChild(matchSpan);
       card.appendChild(title);
       card.appendChild(ingredientsDiv);
       card.appendChild(description);
       card.appendChild(missing);
+      card.appendChild(nutritionInfo);
 
       resultsContainer.appendChild(card);
     });
@@ -375,3 +425,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+          
