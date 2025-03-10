@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // DOM elements
     const generateButton = document.getElementById('generateButton');
     const saveButton = document.getElementById('saveButton');
+    const donateButton = document.getElementById('donateButton');
     const cuisineSelect = document.getElementById('cuisine');
     const mealTypeSelect = document.getElementById('mealType');
     const dietSelect = document.getElementById('diet');
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event listeners
     generateButton.addEventListener('click', generateFood);
     saveButton.addEventListener('click', saveCurrentDish);
+    donateButton.addEventListener('click', openGCashDonation);
 
     // Current generated dish
     let currentDish = null;
@@ -357,5 +359,38 @@ document.addEventListener('DOMContentLoaded', function() {
         return diet.split('-')
             .map(word => capitalizeFirstLetter(word))
             .join('-');
+    }
+    
+    /**
+     * Open GCash donation dialog or redirect to GCash
+     * You can customize this with your actual GCash details
+     */
+    function openGCashDonation() {
+        // Your GCash number (replace with your actual GCash number)
+        const gcashNumber = "09123456789"; // Replace with your actual GCash number
+        
+        // Show a dialog with GCash donation information
+        const confirmDonation = window.confirm(
+            `Thank you for supporting CulinaryCompass!\n\n` +
+            `To donate, please send your contribution to GCash number:\n` +
+            `${gcashNumber}\n\n` +
+            `Your support helps us continue developing and improving this tool.`
+        );
+        
+        // If mobile device with GCash app potentially installed, offer to open the app
+        if (confirmDonation && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            const openApp = window.confirm("Would you like to open the GCash app if installed?");
+            if (openApp) {
+                // Attempt to open GCash app
+                window.location.href = `gcash://fund_transfer?fund_transfer=${gcashNumber}`;
+                
+                // Fallback for iOS if the deep link doesn't work
+                setTimeout(() => {
+                    if (/(iPhone|iPad|iPod)/i.test(navigator.userAgent)) {
+                        window.location.href = "https://apps.apple.com/ph/app/gcash/id519786303";
+                    }
+                }, 1000);
+            }
+        }
     }
 });

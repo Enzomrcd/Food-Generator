@@ -327,10 +327,53 @@ button i {
 
 /* Footer styles */
 footer {
-    text-align: center;
     color: var(--text-light);
     padding: 20px 0;
     font-size: 0.9rem;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.donation-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.donation-section p {
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.donate-btn {
+    background-color: #00aad4; /* GCash blue color */
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.donate-btn:hover {
+    background-color: #0089a9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 170, 212, 0.3);
+}
+
+.donate-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
 }
 
 /* Animations */
