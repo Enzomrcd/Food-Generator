@@ -213,6 +213,107 @@ button i {
     display: none;
 }
 
+/* Multiple dish options styles */
+.dishes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.dish-option {
+    background: var(--bg-color);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 3px 10px var(--shadow-color);
+    transition: var(--transition);
+    position: relative;
+    border: 2px solid transparent;
+}
+
+.dish-option.active {
+    border-color: var(--primary-color);
+}
+
+.dish-option:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.dish-name {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+    color: var(--primary-color);
+    position: relative;
+    display: inline-block;
+}
+
+.dish-name::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 30px;
+    height: 3px;
+    background-color: var(--accent-color);
+}
+
+.dish-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    color: var(--text-color);
+}
+
+.dish-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.tutorial-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    padding: 8px 14px;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 12px;
+    transition: var(--transition);
+}
+
+.tutorial-link:hover {
+    background-color: #e4b84d;
+    transform: translateY(-2px);
+}
+
+.tutorial-link i {
+    font-size: 1rem;
+}
+
+.select-dish-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 8px 14px;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: var(--transition);
+}
+
+.select-dish-btn:hover {
+    background-color: #3db1a8;
+    transform: translateY(-2px);
+}
+
 .food-name {
     font-family: var(--font-display);
     font-size: 2.2rem;

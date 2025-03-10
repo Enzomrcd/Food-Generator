@@ -5,9 +5,21 @@ const foodData = {
     italian: {
         breakfast: {
             any: [
-                { name: "Cornetto with Cappuccino", description: "A flaky, buttery Italian croissant served with a perfectly balanced cappuccino." },
-                { name: "Ricotta Pancakes with Lemon", description: "Light and fluffy pancakes made with ricotta cheese and topped with lemon zest and honey." },
-                { name: "Frittata di Verdure", description: "Italian open-faced omelet with seasonal vegetables, fresh herbs, and Parmesan cheese." }
+                { 
+                    name: "Cornetto with Cappuccino", 
+                    description: "A flaky, buttery Italian croissant served with a perfectly balanced cappuccino.",
+                    tutorialLink: "https://www.youtube.com/watch?v=zyZFwu0H7Bc"
+                },
+                { 
+                    name: "Ricotta Pancakes with Lemon", 
+                    description: "Light and fluffy pancakes made with ricotta cheese and topped with lemon zest and honey.",
+                    tutorialLink: "https://www.youtube.com/watch?v=hWGJkG2VMjE"
+                },
+                { 
+                    name: "Frittata di Verdure", 
+                    description: "Italian open-faced omelet with seasonal vegetables, fresh herbs, and Parmesan cheese.",
+                    tutorialLink: "https://www.youtube.com/watch?v=uV75GfJ0A9Q"
+                }
             ],
             vegetarian: [
                 { name: "Cornetto with Cappuccino", description: "A flaky, buttery Italian croissant served with a perfectly balanced cappuccino." },
@@ -166,9 +178,21 @@ const foodData = {
     filipino: {
         breakfast: {
             any: [
-                { name: "Tapsilog", description: "Classic Filipino breakfast with marinated beef tapa, garlic fried rice (sinangag), and fried egg (itlog)." },
-                { name: "Champorado", description: "Sweet chocolate rice porridge traditionally made with glutinous rice and tablea chocolate, often served with tuyo (dried fish)." },
-                { name: "Pandesal", description: "Filipino bread rolls served with butter, cheese, or dipped in coffee." }
+                { 
+                    name: "Tapsilog", 
+                    description: "Classic Filipino breakfast with marinated beef tapa, garlic fried rice (sinangag), and fried egg (itlog).",
+                    tutorialLink: "https://www.youtube.com/watch?v=rjwGGPrHKcI"
+                },
+                { 
+                    name: "Champorado", 
+                    description: "Sweet chocolate rice porridge traditionally made with glutinous rice and tablea chocolate, often served with tuyo (dried fish).",
+                    tutorialLink: "https://www.youtube.com/watch?v=HKNn-ETcQVI"
+                },
+                { 
+                    name: "Pandesal", 
+                    description: "Filipino bread rolls served with butter, cheese, or dipped in coffee.",
+                    tutorialLink: "https://www.youtube.com/watch?v=4eWu3aBsVdY"
+                }
             ],
             vegetarian: [
                 { name: "Arroz Caldo", description: "Filipino-style rice porridge with ginger, topped with tofu, green onions, and calamansi." },
@@ -177,10 +201,26 @@ const foodData = {
         },
         lunch: {
             any: [
-                { name: "Adobo", description: "National dish of the Philippines made with meat (usually chicken or pork) marinated in vinegar, soy sauce, and garlic." },
-                { name: "Sinigang", description: "Sour soup made with tamarind, various vegetables, and meat or seafood." },
-                { name: "Pancit Canton", description: "Stir-fried noodles with vegetables, meat, and seafood, seasoned with calamansi and soy sauce." },
-                { name: "Kare-Kare", description: "Rich Filipino stew with oxtail, vegetables, and a creamy peanut sauce, traditionally served with bagoong (shrimp paste)." }
+                { 
+                    name: "Adobo", 
+                    description: "National dish of the Philippines made with meat (usually chicken or pork) marinated in vinegar, soy sauce, and garlic.",
+                    tutorialLink: "https://www.youtube.com/watch?v=Ix5Dnud1bl0"
+                },
+                { 
+                    name: "Sinigang", 
+                    description: "Sour soup made with tamarind, various vegetables, and meat or seafood.",
+                    tutorialLink: "https://www.youtube.com/watch?v=CG-VLdbGKMU" 
+                },
+                { 
+                    name: "Pancit Canton", 
+                    description: "Stir-fried noodles with vegetables, meat, and seafood, seasoned with calamansi and soy sauce.",
+                    tutorialLink: "https://www.youtube.com/watch?v=zzn00zSowqQ"
+                },
+                { 
+                    name: "Kare-Kare", 
+                    description: "Rich Filipino stew with oxtail, vegetables, and a creamy peanut sauce, traditionally served with bagoong (shrimp paste).",
+                    tutorialLink: "https://www.youtube.com/watch?v=nWIhBKqQ1pE"
+                }
             ],
             vegetarian: [
                 { name: "Pinakbet", description: "Vegetable dish made with bitter melon, eggplant, okra, and other vegetables stewed in a vegetarian bagoong sauce." },

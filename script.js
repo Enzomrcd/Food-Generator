@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentDish = null;
 
     /**
-     * Generate a food suggestion based on user selections
+     * Generate multiple food suggestions based on user selections
      */
     function generateFood() {
         // Get user selections
@@ -43,29 +43,34 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedDiet = dietSelect.value;
 
         // Show loading animation
-        resultPlaceholder.innerHTML = '<i class="fas fa-spinner fa-pulse"></i><p>Finding the perfect dish...</p>';
+        resultPlaceholder.innerHTML = '<i class="fas fa-spinner fa-pulse"></i><p>Finding delicious options for you...</p>';
         resultContent.classList.add('hidden');
         
         // Simulate delay for better UX
         setTimeout(() => {
-            // Generate food suggestion with enhanced algorithm
-            const dish = getFoodSuggestion(selectedCuisine, selectedMealType, selectedDiet);
+            // Generate 3 food suggestions with enhanced algorithm
+            const dishes = getMultipleFoodSuggestions(selectedCuisine, selectedMealType, selectedDiet, 3);
             
-            if (dish) {
-                displayDish(dish, selectedCuisine, selectedMealType, selectedDiet);
-                currentDish = {
-                    name: dish.name,
-                    description: dish.description,
-                    cuisine: selectedCuisine !== 'any' ? selectedCuisine : 'Various',
-                    mealType: selectedMealType !== 'any' ? selectedMealType : 'Any Time',
-                    diet: selectedDiet !== 'any' ? selectedDiet : 'No Restrictions'
-                };
+            if (dishes && dishes.length > 0) {
+                displayMultipleDishes(dishes, selectedCuisine, selectedMealType, selectedDiet);
+                
+                // Set the first dish as the current dish
+                if (dishes[0]) {
+                    currentDish = {
+                        name: dishes[0].name,
+                        description: dishes[0].description,
+                        cuisine: selectedCuisine !== 'any' ? selectedCuisine : 'Various',
+                        mealType: selectedMealType !== 'any' ? selectedMealType : 'Any Time',
+                        diet: selectedDiet !== 'any' ? selectedDiet : 'No Restrictions',
+                        tutorialLink: dishes[0].tutorialLink || null
+                    };
+                }
                 
                 // Enable save button
                 saveButton.disabled = false;
             } else {
-                // No dish found
-                resultPlaceholder.innerHTML = '<i class="fas fa-exclamation-circle"></i><p>No dish found for these criteria. Try different selections.</p>';
+                // No dishes found
+                resultPlaceholder.innerHTML = '<i class="fas fa-exclamation-circle"></i><p>No dishes found for these criteria. Try different selections.</p>';
                 saveButton.disabled = true;
             }
         }, 800);
@@ -230,17 +235,140 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /**
-     * Display the dish in the UI
+     * Get multiple food suggestions based on criteria
+     */
+    function getMultipleFoodSuggestions(cuisine, mealType, diet, count) {
+        const dishes = [];
+        const usedNames = new Set(); // To track unique dishes
+        
+        // Try to get unique dishes
+        for (let i = 0; i < count * 3 && dishes.length < count; i++) {
+            const dish = getFoodSuggestion(cuisine, mealType, diet);
+            if (dish && !usedNames.has(dish.name)) {
+                dishes.push(dish);
+                usedNames.add(dish.name);
+            }
+            
+            // If we've tried too many times and can't find enough unique dishes, break
+            if (i >= count * 5 && dishes.length > 0) break;
+        }
+        
+        return dishes;
+    }
+
+    /**
+     * Display multiple dishes in the UI
+     */
+    function displayMultipleDishes(dishes, cuisine, mealType, diet) {
+        // Clear existing content
+        resultContent.innerHTML = '';
+        
+        // Create container for multiple dishes
+        const dishesContainer = document.createElement('div');
+        dishesContainer.className = 'dishes-container';
+        
+        // Add each dish
+        dishes.forEach((dish, index) => {
+            const dishElement = document.createElement('div');
+            dishElement.className = 'dish-option';
+            dishElement.setAttribute('data-index', index);
+            
+            // Add active class to first dish
+            if (index === 0) {
+                dishElement.classList.add('active');
+            }
+            
+            // Create HTML for dish
+            const tutorialButton = dish.tutorialLink 
+                ? `<a href="${dish.tutorialLink}" target="_blank" class="tutorial-link"><i class="fas fa-video"></i> Watch Tutorial</a>` 
+                : '';
+                
+            dishElement.innerHTML = `
+                <h3 class="dish-name">${dish.name}</h3>
+                <p class="dish-description">${dish.description}</p>
+                <div class="dish-tags">
+                    <span class="tag">${cuisine !== 'any' ? capitalizeFirstLetter(cuisine) : 'Various Cuisines'}</span>
+                    <span class="tag">${mealType !== 'any' ? capitalizeFirstLetter(mealType) : 'Any Time'}</span>
+                    <span class="tag">${diet !== 'any' ? formatDietName(diet) : 'No Restrictions'}</span>
+                </div>
+                ${tutorialButton}
+                <button class="select-dish-btn" data-index="${index}">Select This Dish</button>
+            `;
+            
+            dishesContainer.appendChild(dishElement);
+        });
+        
+        // Add container to result content
+        resultContent.appendChild(dishesContainer);
+        
+        // Add event listeners for select buttons
+        const selectButtons = resultContent.querySelectorAll('.select-dish-btn');
+        selectButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const index = parseInt(this.getAttribute('data-index'));
+                selectDish(dishes[index], cuisine, mealType, diet);
+            });
+        });
+        
+        // Show content, hide placeholder
+        resultPlaceholder.classList.add('hidden');
+        resultContent.classList.remove('hidden');
+    }
+    
+    /**
+     * Select a specific dish from the options
+     */
+    function selectDish(dish, cuisine, mealType, diet) {
+        // Update current dish
+        currentDish = {
+            name: dish.name,
+            description: dish.description,
+            cuisine: cuisine !== 'any' ? cuisine : 'Various',
+            mealType: mealType !== 'any' ? mealType : 'Any Time',
+            diet: diet !== 'any' ? diet : 'No Restrictions',
+            tutorialLink: dish.tutorialLink || null
+        };
+        
+        // Highlight the selected dish
+        const dishOptions = document.querySelectorAll('.dish-option');
+        dishOptions.forEach(option => {
+            option.classList.remove('active');
+            if (parseInt(option.getAttribute('data-index')) === parseInt(event.target.getAttribute('data-index'))) {
+                option.classList.add('active');
+            }
+        });
+        
+        // Enable save button
+        saveButton.disabled = false;
+    }
+    
+    /**
+     * Display a single dish in the UI (legacy function kept for compatibility)
      */
     function displayDish(dish, cuisine, mealType, diet) {
-        // Update dish information
-        foodNameElement.textContent = dish.name;
-        foodDescriptionElement.textContent = dish.description;
+        // Create a single dish display
+        resultContent.innerHTML = '';
         
-        // Update tags
-        cuisineTagElement.textContent = cuisine !== 'any' ? capitalizeFirstLetter(cuisine) : 'Various Cuisines';
-        mealTypeTagElement.textContent = mealType !== 'any' ? capitalizeFirstLetter(mealType) : 'Any Time';
-        dietTagElement.textContent = diet !== 'any' ? formatDietName(diet) : 'No Restrictions';
+        const dishElement = document.createElement('div');
+        dishElement.className = 'dish-option active';
+        
+        // Add tutorial link if available
+        const tutorialButton = dish.tutorialLink 
+            ? `<a href="${dish.tutorialLink}" target="_blank" class="tutorial-link"><i class="fas fa-video"></i> Watch Tutorial</a>` 
+            : '';
+            
+        dishElement.innerHTML = `
+            <h3 class="dish-name">${dish.name}</h3>
+            <p class="dish-description">${dish.description}</p>
+            <div class="dish-tags">
+                <span class="tag">${cuisine !== 'any' ? capitalizeFirstLetter(cuisine) : 'Various Cuisines'}</span>
+                <span class="tag">${mealType !== 'any' ? capitalizeFirstLetter(mealType) : 'Any Time'}</span>
+                <span class="tag">${diet !== 'any' ? formatDietName(diet) : 'No Restrictions'}</span>
+            </div>
+            ${tutorialButton}
+        `;
+        
+        resultContent.appendChild(dishElement);
         
         // Show content, hide placeholder
         resultPlaceholder.classList.add('hidden');
@@ -306,6 +434,11 @@ document.addEventListener('DOMContentLoaded', function() {
         sortedDishes.forEach((dish, index) => {
             const dishElement = document.createElement('div');
             dishElement.className = 'saved-dish';
+            // Add tutorial link if available
+            const tutorialButton = dish.tutorialLink 
+                ? `<a href="${dish.tutorialLink}" target="_blank" class="tutorial-link"><i class="fas fa-video"></i> Watch Tutorial</a>` 
+                : '';
+                
             dishElement.innerHTML = `
                 <h4>${dish.name}</h4>
                 <p>${dish.description}</p>
@@ -314,6 +447,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span class="tag">${dish.mealType}</span>
                     <span class="tag">${dish.diet}</span>
                 </div>
+                ${tutorialButton}
                 <button class="delete-dish" data-index="${index}">
                     <i class="fas fa-trash-alt"></i>
                 </button>
