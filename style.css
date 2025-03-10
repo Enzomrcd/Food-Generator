@@ -392,6 +392,131 @@ footer {
     animation: fadeIn 0.5s ease forwards;
 }
 
+/* GCash donation modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.gcash-modal {
+    background-color: var(--bg-color);
+    border-radius: var(--border-radius);
+    max-width: 450px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: modalFadeIn 0.3s ease forwards;
+    overflow: hidden;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    background-color: #00aad4; /* GCash blue */
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.close-modal {
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: var(--transition);
+}
+
+.close-modal:hover {
+    transform: scale(1.1);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-body p {
+    margin-bottom: 15px;
+}
+
+.gcash-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.qr-code-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.gcash-qr {
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.qr-caption {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid var(--border-color);
+}
+
+.open-gcash-app {
+    background-color: #00aad4;
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.open-gcash-app:hover {
+    background-color: #0089a9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 170, 212, 0.3);
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
     .container {
@@ -431,5 +556,9 @@ footer {
     
     .food-name {
         font-size: 1.8rem;
+    }
+    
+    .gcash-modal {
+        width: 95%;
     }
 }

@@ -362,25 +362,64 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Open GCash donation dialog or redirect to GCash
+     * Open GCash donation modal with QR code
      * You can customize this with your actual GCash details
      */
     function openGCashDonation() {
         // Your GCash number (replace with your actual GCash number)
         const gcashNumber = "09123456789"; // Replace with your actual GCash number
         
-        // Show a dialog with GCash donation information
-        const confirmDonation = window.confirm(
-            `Thank you for supporting CulinaryCompass!\n\n` +
-            `To donate, please send your contribution to GCash number:\n` +
-            `${gcashNumber}\n\n` +
-            `Your support helps us continue developing and improving this tool.`
-        );
+        // Create modal overlay
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
         
-        // If mobile device with GCash app potentially installed, offer to open the app
-        if (confirmDonation && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-            const openApp = window.confirm("Would you like to open the GCash app if installed?");
-            if (openApp) {
+        // Create modal content
+        const modalContent = document.createElement('div');
+        modalContent.className = 'gcash-modal';
+        
+        // Add content to modal
+        modalContent.innerHTML = `
+            <div class="modal-header">
+                <h3>Support CulinaryCompass</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Thank you for supporting CulinaryCompass! Your donation helps us continue developing and improving this tool.</p>
+                <div class="gcash-info">
+                    <p>GCash Number: <strong>${gcashNumber}</strong></p>
+                    <div class="qr-code-container">
+                        <img src="generated-icon.png" alt="GCash QR Code" class="gcash-qr">
+                        <p class="qr-caption">Scan QR code to donate</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="open-gcash-app">Open GCash App</button>
+            </div>
+        `;
+        
+        // Add modal to body
+        modalOverlay.appendChild(modalContent);
+        document.body.appendChild(modalOverlay);
+        
+        // Event listener for close button
+        const closeBtn = modalContent.querySelector('.close-modal');
+        closeBtn.addEventListener('click', () => {
+            document.body.removeChild(modalOverlay);
+        });
+        
+        // Event listener for clicking outside the modal
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                document.body.removeChild(modalOverlay);
+            }
+        });
+        
+        // Event listener for open app button
+        const openAppBtn = modalContent.querySelector('.open-gcash-app');
+        openAppBtn.addEventListener('click', () => {
+            // Check if user is on mobile
+            if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
                 // Attempt to open GCash app
                 window.location.href = `gcash://fund_transfer?fund_transfer=${gcashNumber}`;
                 
@@ -390,7 +429,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         window.location.href = "https://apps.apple.com/ph/app/gcash/id519786303";
                     }
                 }, 1000);
+            } else {
+                alert("This feature works best on mobile devices with the GCash app installed.");
             }
-        }
+        });
     }
 });
