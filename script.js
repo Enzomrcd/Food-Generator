@@ -501,7 +501,7 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     function openGCashDonation() {
         // Your GCash number (replace with your actual GCash number)
-        const gcashNumber = "09123456789"; // Replace with your actual GCash number
+        const gcashNumber = "09853754712"; // Replace with your actual GCash number
         
         // Create modal overlay
         const modalOverlay = document.createElement('div');
@@ -522,7 +522,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="gcash-info">
                     <p>GCash Number: <strong>${gcashNumber}</strong></p>
                     <div class="qr-code-container">
-                        <img src="generated-icon.png" alt="GCash QR Code" class="gcash-qr">
+                        <img src="gcash.jpeg" alt="GCash QR Code" class="gcash-qr">
                         <p class="qr-caption">Scan QR code to donate</p>
                     </div>
                 </div>
