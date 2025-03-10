@@ -1,127 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CulinaryCompass - Food Generator</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <div class="logo-container">
-                <i class="fas fa-utensils logo-icon"></i>
-                <h1>CulinaryCompass</h1>
-            </div>
-            <p class="tagline">Discover your next delicious meal</p>
-        </header>
-
-        <main>
-            <div class="input-section">
-                <div class="cuisine-container">
-                    <label for="cuisine">Choose a cuisine (optional):</label>
-                    <select id="cuisine">
-                        <option value="any">Any Cuisine</option>
-                        <option value="italian">Italian</option>
-                        <option value="mexican">Mexican</option>
-                        <option value="asian">Asian</option>
-                        <option value="american">American</option>
-                        <option value="mediterranean">Mediterranean</option>
-                        <option value="indian">Indian</option>
-                        <option value="filipino">Filipino</option>
-                        <option value="french">French</option>
-                        <option value="greek">Greek</option>
-                        <option value="spanish">Spanish</option>
-                        <option value="japanese">Japanese</option>
-                        <option value="thai">Thai</option>
-                        <option value="vietnamese">Vietnamese</option>
-                        <option value="korean">Korean</option>
-                        <option value="middle-eastern">Middle Eastern</option>
-                    </select>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CulinaryCompass - Food Generator</title>
+        <link rel="stylesheet" href="style.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <div class="logo-container">
+                    <i class="fas fa-utensils logo-icon"></i>
+                    <h1>CulinaryCompass</h1>
                 </div>
-                
-                <div class="meal-type-container">
-                    <label for="mealType">Meal type (optional):</label>
-                    <select id="mealType">
-                        <option value="any">Any Type</option>
-                        <option value="breakfast">Breakfast</option>
-                        <option value="lunch">Lunch</option>
-                        <option value="dinner">Dinner</option>
-                        <option value="appetizer">Appetizer</option>
-                        <option value="dessert">Dessert</option>
-                        <option value="snack">Snack</option>
-                        <option value="drink">Drink</option>
-                    </select>
+                <p class="tagline">Discover your next delicious meal</p>
+            </header>
+
+            <main>
+                <div class="input-section">
+                    <div class="cuisine-container">
+                        <label for="cuisine"
+                            >Choose a cuisine (optional):</label
+                        >
+                        <select id="cuisine">
+                            <option value="any">Any Cuisine</option>
+                            <option value="italian">Italian</option>
+                            <option value="mexican">Mexican</option>
+                            <option value="asian">Asian</option>
+                            <option value="american">American</option>
+                            <option value="mediterranean">Mediterranean</option>
+                            <option value="indian">Indian</option>
+                            <option value="filipino">Filipino</option>
+                            <option value="french">French</option>
+                            <option value="greek">Greek</option>
+                            <option value="spanish">Spanish</option>
+                            <option value="japanese">Japanese</option>
+                            <option value="thai">Thai</option>
+                            <option value="vietnamese">Vietnamese</option>
+                            <option value="korean">Korean</option>
+                            <option value="middle-eastern">
+                                Middle Eastern
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="meal-type-container">
+                        <label for="mealType">Meal type (optional):</label>
+                        <select id="mealType">
+                            <option value="any">Any Type</option>
+                            <option value="breakfast">Breakfast</option>
+                            <option value="lunch">Lunch</option>
+                            <option value="dinner">Dinner</option>
+                            <option value="appetizer">Appetizer</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="snack">Snack</option>
+                            <option value="drink">Drink</option>
+                        </select>
+                    </div>
+
+                    <div class="diet-container">
+                        <label for="diet">Dietary preference (optional):</label>
+                        <select id="diet">
+                            <option value="any">No Preference</option>
+                            <option value="vegetarian">Vegetarian</option>
+                            <option value="vegan">Vegan</option>
+                            <option value="gluten-free">Gluten-Free</option>
+                            <option value="dairy-free">Dairy-Free</option>
+                            <option value="low-carb">Low Carb</option>
+                            <option value="keto">Keto</option>
+                            <option value="paleo">Paleo</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="diet-container">
-                    <label for="diet">Dietary preference (optional):</label>
-                    <select id="diet">
-                        <option value="any">No Preference</option>
-                        <option value="vegetarian">Vegetarian</option>
-                        <option value="vegan">Vegan</option>
-                        <option value="gluten-free">Gluten-Free</option>
-                        <option value="dairy-free">Dairy-Free</option>
-                        <option value="low-carb">Low Carb</option>
-                        <option value="keto">Keto</option>
-                        <option value="paleo">Paleo</option>
-                    </select>
+                <div class="button-container">
+                    <button id="generateButton" class="generate-btn">
+                        <i class="fas fa-random"></i> Generate Food
+                    </button>
+                    <button id="saveButton" class="save-btn" disabled>
+                        <i class="fas fa-bookmark"></i> Save This Dish
+                    </button>
                 </div>
-            </div>
 
-            <div class="button-container">
-                <button id="generateButton" class="generate-btn">
-                    <i class="fas fa-random"></i> Generate Food
-                </button>
-                <button id="saveButton" class="save-btn" disabled>
-                    <i class="fas fa-bookmark"></i> Save This Dish
-                </button>
-            </div>
-
-            <div id="result" class="result">
-                <div class="result-placeholder">
-                    <i class="fas fa-utensils placeholder-icon"></i>
-                    <p>Your dish will appear here</p>
-                </div>
-                <div class="result-content hidden">
-                    <h2 id="foodName" class="food-name"></h2>
-                    <div class="food-details">
-                        <p id="foodDescription" class="food-description"></p>
-                        <div class="food-tags">
-                            <span id="cuisineTag" class="tag"></span>
-                            <span id="mealTypeTag" class="tag"></span>
-                            <span id="dietTag" class="tag"></span>
+                <div id="result" class="result">
+                    <div class="result-placeholder">
+                        <i class="fas fa-utensils placeholder-icon"></i>
+                        <p>Your dish will appear here</p>
+                    </div>
+                    <div class="result-content hidden">
+                        <h2 id="foodName" class="food-name"></h2>
+                        <div class="food-details">
+                            <p
+                                id="foodDescription"
+                                class="food-description"
+                            ></p>
+                            <div class="food-tags">
+                                <span id="cuisineTag" class="tag"></span>
+                                <span id="mealTypeTag" class="tag"></span>
+                                <span id="dietTag" class="tag"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="savedDishes" class="saved-dishes-section">
-                <h3 class="saved-dishes-title">
-                    <i class="fas fa-bookmark"></i> Saved Dishes
-                </h3>
-                <div id="savedDishesList" class="saved-dishes-list"></div>
-            </div>
-        </main>
-
-        <footer>
-            <div class="footer-content">
-                <p>&copy; 2023 CulinaryCompass | Deliciously redesigned</p>
-                <div class="donation-section">
-                    <p>Support this project:</p>
-                    <button id="donateButton" class="donate-btn">
-                        <i class="fas fa-hand-holding-heart"></i> Donate via GCash
-                    </button>
+                <div id="savedDishes" class="saved-dishes-section">
+                    <h3 class="saved-dishes-title">
+                        <i class="fas fa-bookmark"></i> Saved Dishes
+                    </h3>
+                    <div id="savedDishesList" class="saved-dishes-list"></div>
                 </div>
-            </div>
-        </footer>
-    </div>
-    
-    <script src="foodData.js"></script>
-    <script src="script.js"></script>
-</body>
+            </main>
+
+            <footer>
+                <div class="footer-content">
+                    <p>&copy; 2023 CulinaryCompass | Deliciously redesigned</p>
+                    <div class="donation-section">
+                        <p>Support this project:</p>
+                        <button id="donateButton" class="donate-btn">
+                            <i class="fas fa-hand-holding-heart"></i> Donate via
+                            GCash
+                        </button>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <script src="foodData.js"></script>
+        <script src="script.js"></script>
+    </body>
 </html>
