@@ -163,6 +163,73 @@ const foodData = {
             ]
         }
     },
+    filipino: {
+        breakfast: {
+            any: [
+                { name: "Tapsilog", description: "Classic Filipino breakfast with marinated beef tapa, garlic fried rice (sinangag), and fried egg (itlog)." },
+                { name: "Champorado", description: "Sweet chocolate rice porridge traditionally made with glutinous rice and tablea chocolate, often served with tuyo (dried fish)." },
+                { name: "Pandesal", description: "Filipino bread rolls served with butter, cheese, or dipped in coffee." }
+            ],
+            vegetarian: [
+                { name: "Arroz Caldo", description: "Filipino-style rice porridge with ginger, topped with tofu, green onions, and calamansi." },
+                { name: "Bibingka", description: "Traditional rice cake cooked in clay pots lined with banana leaves, topped with butter and grated coconut." }
+            ]
+        },
+        lunch: {
+            any: [
+                { name: "Adobo", description: "National dish of the Philippines made with meat (usually chicken or pork) marinated in vinegar, soy sauce, and garlic." },
+                { name: "Sinigang", description: "Sour soup made with tamarind, various vegetables, and meat or seafood." },
+                { name: "Pancit Canton", description: "Stir-fried noodles with vegetables, meat, and seafood, seasoned with calamansi and soy sauce." },
+                { name: "Kare-Kare", description: "Rich Filipino stew with oxtail, vegetables, and a creamy peanut sauce, traditionally served with bagoong (shrimp paste)." }
+            ],
+            vegetarian: [
+                { name: "Pinakbet", description: "Vegetable dish made with bitter melon, eggplant, okra, and other vegetables stewed in a vegetarian bagoong sauce." },
+                { name: "Laing", description: "Taro leaves cooked in coconut milk with chili peppers, served without meat for a vegetarian version." }
+            ],
+            vegan: [
+                { name: "Ginataang Gulay", description: "Assorted vegetables like squash, string beans, and eggplant cooked in coconut milk with garlic and onions." },
+                { name: "Ensaladang Talong", description: "Filipino eggplant salad with tomatoes, onions, and a vinegar dressing." }
+            ]
+        },
+        dinner: {
+            any: [
+                { name: "Lechon", description: "Whole roasted pig with crispy skin and tender meat, a centerpiece of Filipino celebrations." },
+                { name: "Crispy Pata", description: "Deep-fried pork knuckle with crispy skin and tender meat, served with a soy-vinegar dipping sauce." },
+                { name: "Bulalo", description: "Beef bone marrow soup with vegetables like corn, cabbage, and potatoes." },
+                { name: "Sisig", description: "Sizzling dish made from parts of pig head and liver, seasoned with calamansi and chili peppers." }
+            ],
+            vegetarian: [
+                { name: "Tortang Talong", description: "Filipino eggplant omelet where the eggplant is grilled, flattened, and dipped in egg before frying." },
+                { name: "Ginisang Monggo", description: "Mung bean stew with vegetables like bitter melon, made vegetarian by omitting the usual pork." }
+            ]
+        },
+        snack: {
+            any: [
+                { name: "Lumpia", description: "Filipino spring rolls filled with ground meat and vegetables, served with a sweet chili dipping sauce." },
+                { name: "Siopao", description: "Steamed bun filled with pork asado or chicken." },
+                { name: "Turon", description: "Sweet spring rolls filled with sliced bananas and jackfruit, coated with caramelized sugar." }
+            ],
+            vegetarian: [
+                { name: "Bibingka Malagkit", description: "Sticky rice cake cooked in coconut milk and topped with coconut caramel sauce." },
+                { name: "Palitaw", description: "Flat rice cakes coated with grated coconut, sugar, and toasted sesame seeds." }
+            ],
+            vegan: [
+                { name: "Banana Cue", description: "Caramelized bananas coated in brown sugar and deep-fried." },
+                { name: "Camote Cue", description: "Caramelized sweet potatoes coated in brown sugar and deep-fried." }
+            ]
+        },
+        dessert: {
+            any: [
+                { name: "Halo-Halo", description: "Popular Filipino dessert with shaved ice, sweet beans, fruits, and jellies topped with ube ice cream and leche flan." },
+                { name: "Leche Flan", description: "Filipino caramel custard made with egg yolks and condensed milk." },
+                { name: "Buko Pandan", description: "Young coconut strips and pandan-flavored gelatin in sweet cream and condensed milk." }
+            ],
+            "dairy-free": [
+                { name: "Biko", description: "Sweet rice cake made from sticky rice, coconut milk, and brown sugar." },
+                { name: "Sapin-Sapin", description: "Colorful layered glutinous rice cake with coconut milk and various flavors." }
+            ]
+        }
+    },
     // Add more cuisines, meal types, and dietary preferences as needed
 };
 
