@@ -404,6 +404,9 @@
                     if (mainNav && window.innerWidth < 768) {
                         mainNav.classList.remove('active');
                     }
+
+                    // Update mobile user info
+                    this.updateMobileUserInfo();
                 }, 1000);
             }, 600);
         },
@@ -467,6 +470,9 @@
                     if (postForm) {
                         postForm.classList.remove('hidden');
                     }
+
+                    // Update mobile user info
+                    this.updateMobileUserInfo();
                 }, 1000);
             }, 600);
         },
@@ -500,6 +506,7 @@
             setTimeout(() => {
                 document.body.removeChild(dialog);
                 this.renderAuthUI();
+                this.updateMobileUserInfo(); //update mobile UI after profile update
             }, 1000);
         },
 
@@ -517,6 +524,8 @@
             if (postForm) {
                 postForm.classList.add('hidden');
             }
+            //Hide mobile user info
+            this.updateMobileUserInfo();
         },
 
         // Show message in form
@@ -533,6 +542,22 @@
                     messageElement.textContent = '';
                     messageElement.className = 'form-message';
                 }, 5000);
+            }
+        },
+
+        // Update mobile user info
+        updateMobileUserInfo: function() {
+            const mobileUserInfo = document.getElementById('mobile-user-info');
+            if (mobileUserInfo) {
+                if (this.isAuthenticated()) {
+                    mobileUserInfo.innerHTML = `
+                        <img src="${this.currentUser.profileImage || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(this.currentUser.name)}" alt="${this.currentUser.name}" class="user-avatar">
+                        <span>${this.currentUser.name}</span>
+                    `;
+                    mobileUserInfo.style.display = 'block';
+                } else {
+                    mobileUserInfo.style.display = 'none';
+                }
             }
         }
     };

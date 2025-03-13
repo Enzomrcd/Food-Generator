@@ -136,6 +136,7 @@ function setupEventListeners() {
     // Hamburger menu toggle
     const menuToggle = document.getElementById('menu-toggle');
     const mainNav = document.getElementById('main-nav');
+    const mobileUserInfo = document.querySelector('.mobile-user-info');
 
     if (menuToggle && mainNav) {
         // Improve hamburger menu functionality
@@ -143,6 +144,11 @@ function setupEventListeners() {
             e.preventDefault();
             e.stopPropagation();
             mainNav.classList.toggle('active');
+            
+            // Show/hide mobile user info
+            if (mobileUserInfo) {
+                mobileUserInfo.classList.toggle('active', mainNav.classList.contains('active'));
+            }
         });
 
         // Close menu when clicking outside
@@ -151,6 +157,11 @@ function setupEventListeners() {
                 !mainNav.contains(event.target) && 
                 !menuToggle.contains(event.target)) {
                 mainNav.classList.remove('active');
+                
+                // Hide mobile user info
+                if (mobileUserInfo) {
+                    mobileUserInfo.classList.remove('active');
+                }
             }
         });
     }
