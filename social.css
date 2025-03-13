@@ -1,0 +1,556 @@
+
+/* Social features styles for CulinaryCompass */
+
+/* Auth container styles */
+.auth-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--bg-color);
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 5px var(--shadow-color);
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.login-btn, .logout-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.login-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.logout-btn {
+    background-color: var(--text-light);
+}
+
+.logout-btn:hover {
+    background-color: var(--text-color);
+}
+
+/* Social section styles */
+.social-section {
+    background: var(--bg-light);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.social-section-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.social-section-title i {
+    color: var(--secondary-color);
+    margin-right: 10px;
+}
+
+/* Post form styles */
+.social-post-form {
+    background: var(--bg-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 3px 10px var(--shadow-color);
+}
+
+.social-post-form h4 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.post-form-group {
+    margin-bottom: 15px;
+}
+
+.post-form-group input,
+.post-form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-family: var(--font-main);
+    font-size: 1rem;
+    resize: none;
+    transition: var(--transition);
+}
+
+.post-form-group textarea {
+    min-height: 100px;
+}
+
+.post-form-group input:focus,
+.post-form-group textarea:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.2);
+}
+
+.file-upload-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--bg-light);
+    color: var(--text-color);
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.file-upload-label:hover {
+    background-color: var(--border-color);
+}
+
+.file-upload-input {
+    display: none;
+}
+
+.image-preview-container {
+    margin-top: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+.image-preview-container img {
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+}
+
+.remove-image-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.remove-image-btn:hover {
+    background-color: var(--primary-dark);
+    transform: scale(1.1);
+}
+
+.post-submit-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    margin-top: 10px;
+}
+
+.post-submit-btn:hover {
+    background-color: #3db1a8;
+    transform: translateY(-2px);
+}
+
+/* Posts container styles */
+.posts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.no-posts {
+    text-align: center;
+    color: var(--text-light);
+    padding: 20px;
+    font-style: italic;
+}
+
+/* Post card styles */
+.post-card {
+    background: var(--bg-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: 0 3px 10px var(--shadow-color);
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.post-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.author-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.post-date {
+    font-size: 0.8rem;
+    color: var(--text-light);
+}
+
+.post-content {
+    margin-bottom: 15px;
+}
+
+.post-title {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.post-text {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.post-image-container {
+    margin-bottom: 15px;
+}
+
+.post-image {
+    max-width: 100%;
+    border-radius: var(--border-radius);
+}
+
+.post-actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.like-button, .comment-button {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    padding: 5px 0;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: var(--transition);
+}
+
+.like-button:hover, .comment-button:hover {
+    color: var(--primary-color);
+}
+
+.like-button i, .comment-button i {
+    font-size: 1.1rem;
+}
+
+/* Comment styles */
+.post-comments {
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+}
+
+.comment-form-container {
+    margin-bottom: 15px;
+}
+
+.comment-form {
+    display: flex;
+    gap: 10px;
+}
+
+.comment-input-container {
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.comment-input {
+    width: 100%;
+    padding: 10px 40px 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-family: var(--font-main);
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.comment-input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.2);
+}
+
+.comment-image-label {
+    position: absolute;
+    right: 10px;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.comment-image-label:hover {
+    color: var(--primary-color);
+}
+
+.comment-image-input {
+    display: none;
+}
+
+.comment-submit {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.comment-submit:hover {
+    background-color: #3db1a8;
+    transform: translateY(-2px);
+}
+
+.comment-image-preview-container {
+    margin-top: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+.comment-image-preview {
+    max-width: 150px;
+    max-height: 100px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+}
+
+.remove-comment-image-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.8rem;
+}
+
+.remove-comment-image-btn:hover {
+    background-color: var(--primary-dark);
+    transform: scale(1.1);
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.no-comments {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-style: italic;
+    padding: 5px 0;
+}
+
+.comment {
+    background-color: var(--bg-light);
+    border-radius: var(--border-radius);
+    padding: 15px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.comment-author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.comment-author-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-author-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-author-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.comment-date {
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+.comment-content {
+    margin-bottom: 10px;
+}
+
+.comment-text {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+.comment-image-container {
+    margin-top: 10px;
+}
+
+.comment-image {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: var(--border-radius);
+}
+
+.comment-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.comment-like-button {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    padding: 3px 0;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: var(--transition);
+}
+
+.comment-like-button:hover {
+    color: var(--primary-color);
+}
+
+.comment-like-button i {
+    font-size: 0.9rem;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .auth-container {
+        position: static;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    
+    .user-info {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .login-btn, .logout-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .post-form-group textarea {
+        min-height: 80px;
+    }
+    
+    .post-actions {
+        justify-content: space-around;
+    }
+    
+    .comment-form {
+        flex-direction: column;
+    }
+    
+    .comment-submit {
+        width: 100%;
+    }
+}

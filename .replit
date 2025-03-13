@@ -27,11 +27,11 @@ task = "packager.installForAll"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "python3 -m http.server 5000"
+args = "node server.js"
 waitForPort = 5000
 
 [deployment]
-run = ["sh", "-c", "python3 -m http.server 5000"]
+run = ["sh", "-c", "node server.js"]
 
 [[ports]]
 localPort = 5000
