@@ -38,7 +38,7 @@
         setupAuthUI: function() {
             const authContainer = document.getElementById('auth-container');
             if (!authContainer) return;
-            
+
             // Clear existing content first
             authContainer.innerHTML = '';
 
@@ -104,7 +104,7 @@
                 if (postForm) {
                     postForm.classList.remove('hidden');
                 }
-                
+
                 // Show social section
                 const socialSection = document.getElementById('social-section');
                 if (socialSection) {
@@ -125,7 +125,7 @@
                 if (postForm) {
                     postForm.classList.add('hidden');
                 }
-                
+
                 // Hide social section for non-authenticated users
                 const socialSection = document.getElementById('social-section');
                 if (socialSection) {
@@ -346,12 +346,12 @@
             // Check if the user exists in localStorage (registered users)
             const registeredUsers = JSON.parse(localStorage.getItem('registered_users')) || [];
             const userExists = registeredUsers.find(user => user.name === username);
-            
+
             if (!userExists) {
                 this.showMessage('login-message', 'User does not exist. Please sign up first.', 'error');
                 return;
             }
-            
+
             // In a real app, you would verify the password securely
             // This is a simple check for demo purposes
             if (userExists.password !== password) {
@@ -386,14 +386,20 @@
                     if (postForm) {
                         postForm.classList.remove('hidden');
                     }
-                    
+
                     // Show social section
                     const socialSection = document.getElementById('social-section');
                     if (socialSection) {
                         socialSection.classList.remove('hidden');
                     }
-                    
-                    // If on mobile, make sure hamburger menu is visible
+
+                    // Show hamburger menu after login
+                    const hamburgerMenu = document.querySelector('.hamburger-menu');
+                    if (hamburgerMenu) {
+                        hamburgerMenu.style.display = 'block';
+                    }
+
+                    // If on mobile, make sure main nav is properly set up
                     const mainNav = document.getElementById('main-nav');
                     if (mainNav && window.innerWidth < 768) {
                         mainNav.classList.remove('active');
@@ -444,7 +450,7 @@
                     profileImage: `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}`,
                     email: email || ''
                 };
-                
+
                 this.currentUser = currentUser;
                 localStorage.setItem('auth_user', JSON.stringify(currentUser));
 

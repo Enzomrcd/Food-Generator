@@ -25,7 +25,20 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSocialUI();
     setupEventListeners();
     loadPosts();
+    
+    // Show or hide hamburger menu based on auth status
+    updateHamburgerVisibility();
 });
+
+// Function to update hamburger menu visibility
+function updateHamburgerVisibility() {
+    const isAuthenticated = window.auth && window.auth.isAuthenticated();
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    
+    if (hamburgerMenu) {
+        hamburgerMenu.style.display = isAuthenticated ? 'block' : 'none';
+    }
+}
 
 // Setup social UI
 function setupSocialUI() {

@@ -42,10 +42,11 @@
 
 /* Hamburger menu */
 .hamburger-menu {
-    display: block;
+    display: none; /* Initially hidden, shown after login */
     position: absolute;
     right: 20px;
-    top: 20px;
+    top: 50%;
+    transform: translateY(-50%);
     z-index: 1001;
 }
 
@@ -638,6 +639,33 @@ footer {
     flex-direction: column;
     align-items: center;
     gap: 15px;
+}
+
+.github-link {
+    margin-top: 10px;
+}
+
+.github-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #24292e;
+    color: white;
+    padding: 8px 16px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.github-button:hover {
+    background-color: #0366d6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.github-button i {
+    font-size: 1.2rem;
 }
 
 .donation-section {
