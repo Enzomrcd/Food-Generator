@@ -25,10 +25,23 @@
                     <h1>CulinaryCompass</h1>
                 </div>
                 <p class="tagline">Discover flavors from every culture</p>
+                <div class="hamburger-menu">
+                    <button id="menu-toggle" class="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+                <nav id="main-nav" class="main-nav">
+                    <ul class="nav-links">
+                        <li><a href="#" class="nav-link active" data-section="generator-section">Home</a></li>
+                        <li><a href="#" class="nav-link" data-section="social-section">Feed</a></li>
+                        <li><a href="#" class="nav-link" data-section="donate-section">Donate</a></li>
+                    </ul>
+                </nav>
                 <div id="auth-container" class="auth-container"></div>
             </header>
 
             <main>
+                <section id="generator-section" class="content-section active">
                 <div class="input-section">
                     <div class="cuisine-container">
                         <label for="cuisine">Choose a cuisine :</label>
@@ -116,19 +129,70 @@
                     </h3>
                     <div id="savedDishesList" class="saved-dishes-list"></div>
                 </div>
+                </section>
+                
+                <section id="social-section" class="content-section">
+                    <h3 class="social-section-title">
+                        <i class="fas fa-users"></i> Community Creations
+                    </h3>
+                    
+                    <div id="social-post-form" class="social-post-form social-feature hidden">
+                        <h4>Share Your Creation</h4>
+                        <form id="post-form">
+                            <div class="post-form-group">
+                                <input type="text" id="post-title" placeholder="Title of your dish" required>
+                            </div>
+                            <div class="post-form-group">
+                                <textarea id="post-content" placeholder="Share your experience, recipe modifications, or thoughts..." required></textarea>
+                            </div>
+                            <div class="post-form-group">
+                                <label for="post-image" class="file-upload-label">
+                                    <i class="fas fa-camera"></i> Add a Photo
+                                </label>
+                                <input type="file" id="post-image" class="file-upload-input" accept="image/*">
+                                <div id="post-image-preview-container" class="image-preview-container" style="display: none;">
+                                    <img id="post-image-preview" class="image-preview">
+                                    <button type="button" id="remove-post-image" class="remove-image-btn">×</button>
+                                </div>
+                            </div>
+                            <button type="submit" id="post-submit" class="post-submit-btn">
+                                <i class="fas fa-paper-plane"></i> Share Post
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div id="posts-container" class="posts-container">
+                        <p class="no-posts">No posts yet. Be the first to share your creation!</p>
+                    </div>
+                </section>
+                
+                <section id="donate-section" class="content-section">
+                    <h3 class="donate-section-title">
+                        <i class="fas fa-hand-holding-heart"></i> Support CulinaryCompass
+                    </h3>
+                    <div class="donate-content">
+                        <p>I would greatly appreciate your support for my project:</p>
+                        <div class="gcash-info">
+                            <p>GCash Number: <strong>09853754712</strong></p>
+                            <div class="qr-code-container">
+                                <img src="gcash.jpeg" alt="GCash QR Code" class="gcash-qr">
+                                <p class="qr-caption">Scan QR code to donate</p>
+                            </div>
+                        </div>
+                        <button id="donateButton" class="donate-btn">
+                            <i class="fas fa-hand-holding-heart"></i> Donate via GCash
+                        </button>
+                    </div>
+                </section>
             </main>
 
             <footer>
                 <div class="footer-content">
                     <p>&copy; Designed & Developed by Lorens Aron Mercado</p>
-                    <div class="donation-section">
-                        <p>I would greatly appreciate your support for my project:</p>
-                        <button id="donateButton" class="donate-btn">
-                            <i class="fas fa-hand-holding-heart"></i> Donate via
-                            GCash
-                        </button>
+                    <div class="github-link">
                         <a href="https://github.com/Enzomrcd" target="_blank">
-    <i class="fa fa-github" aria-hidden="true"></i>GitHub</a>
+                            <i class="fa fa-github" aria-hidden="true"></i> GitHub
+                        </a>
                     </div>
                 </div>
             </footer>

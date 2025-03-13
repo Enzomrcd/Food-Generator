@@ -24,15 +24,41 @@ function checkAuthStatus() {
             // User is authenticated, restore user data
             currentUser = JSON.parse(userSession);
             updateAuthUI(true);
+            
+            // Also update any UI elements that depend on authentication
+            updateSocialFeaturesVisibility(true);
         } catch (error) {
             console.error('Error parsing user session:', error);
             currentUser = null;
             updateAuthUI(false);
+            updateSocialFeaturesVisibility(false);
         }
     } else {
         // User is not authenticated
         currentUser = null;
         updateAuthUI(false);
+        updateSocialFeaturesVisibility(false);
+    }
+}
+
+// Update visibility of social features based on auth status
+function updateSocialFeaturesVisibility(isAuthenticated) {
+    const socialFeatures = document.querySelectorAll('.social-feature');
+    
+    if (isAuthenticated) {
+        socialFeatures.forEach(el => el.classList.remove('hidden'));
+    } else {
+        socialFeatures.forEach(el => el.classList.add('hidden'));
+    }
+    
+    // Update post form visibility
+    const socialPostForm = document.getElementById('social-post-form');
+    if (socialPostForm) {
+        if (isAuthenticated) {
+            socialPostForm.classList.remove('hidden');
+        } else {
+            socialPostForm.classList.add('hidden');
+        }
     }
 }
 
@@ -314,6 +340,15 @@ function logoutUser() {
     // Update UI
     currentUser = null;
     updateAuthUI(false);
+    
+    // Update social features visibility
+    updateSocialFeaturesVisibility(false);
+    
+    // Navigate back to the home section
+    const homeLink = document.querySelector('.nav-link[data-section="generator-section"]');
+    if (homeLink) {
+        homeLink.click();
+    }
 }
 
 // Helper function to get cookie by name (keeping for compatibility)
