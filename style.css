@@ -52,14 +52,22 @@
 .menu-toggle {
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid var(--border-color);
-    font-size: 1.5rem;
     color: var(--text-color);
     cursor: pointer;
-    padding: 12px 15px; /* Increased padding for better touch target */
-    border-radius: 8px; /* Increased border radius */
+    padding: 8px 12px;
+    border-radius: 8px;
     transition: all 0.3s ease;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    z-index: 1002; /* Ensure it's above other elements */
+    z-index: 1002;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.menu-toggle i {
+    font-size: 1.5rem;
 }
 
 .menu-toggle:hover {
@@ -133,7 +141,7 @@
         width: auto;
         box-shadow: none;
         margin-left: auto;
-        margin-right: 130px; /* Increased to make room for auth container */
+        margin-right: 20px;
     }
     
     .nav-links {
@@ -155,6 +163,7 @@
         align-items: center;
         flex-wrap: wrap;
         position: relative;
+        padding: 20px;
     }
     
     .logo-container {
@@ -166,10 +175,26 @@
     }
     
     .auth-container {
-        position: absolute;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
+        position: static;
+        margin-left: 20px;
+        margin-right: 0;
+        transform: none;
+    }
+    
+    /* Layout for desktop - flexbox arrangement */
+    header {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .header-left {
+        display: flex;
+        align-items: center;
+    }
+    
+    .header-right {
+        display: flex;
+        align-items: center;
     }
 }
 

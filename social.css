@@ -181,7 +181,7 @@
 /* Auth container */
 .auth-container {
     margin-left: auto;
-    margin-right: 20px;
+    margin-right: 70px; /* Increased margin to make room for hamburger */
     position: relative;
     z-index: 100;
 }
@@ -191,7 +191,7 @@
     background-color: var(--bg-light);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
-    padding: 10px 15px; /* Increased padding for better clickability */
+    padding: 10px 15px;
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--text-color);
@@ -200,7 +200,7 @@
     align-items: center;
     gap: 8px;
     transition: var(--transition);
-    min-width: 120px; /* Minimum width for better clickability */
+    min-width: 120px;
 }
 
 .auth-button:hover {
@@ -228,6 +228,7 @@
     display: none;
     margin-top: 5px;
     overflow: hidden;
+    border: 1px solid var(--border-color);
 }
 
 .auth-dropdown.active {
@@ -240,10 +241,11 @@
 }
 
 .dropdown-item {
-    padding: 10px 15px;
+    padding: 12px 15px;
     color: var(--text-color);
     text-decoration: none;
     transition: var(--transition);
+    font-size: 0.95rem;
 }
 
 .dropdown-item:hover {
@@ -1064,23 +1066,31 @@
 
 .remove-comment-image-btn {
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: -10px;
+    right: -10px;
     background-color: var(--primary-color);
     color: white;
     border: none;
     border-radius: 50%;
-    width: 24px; /* Increased size for better clickability */
-    height: 24px; /* Increased size for better clickability */
+    width: 24px;
+    height: 24px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: var(--transition);
-    font-size: 1rem; /* Increased font size for better visibility */
-    z-index: 10; /* Ensure it appears above other elements */
-    padding: 0; /* Reset padding */
-    line-height: 1; /* Ensure proper vertical centering */
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 10;
+    padding: 0;
+    line-height: 1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border: 2px solid white;
+}
+
+.remove-comment-image-btn:hover {
+    background-color: var(--primary-dark);
+    transform: scale(1.1);
 }
 
 .remove-comment-image-btn:hover {

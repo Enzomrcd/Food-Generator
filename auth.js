@@ -38,6 +38,9 @@
         setupAuthUI: function() {
             const authContainer = document.getElementById('auth-container');
             if (!authContainer) return;
+            
+            // Clear existing content first
+            authContainer.innerHTML = '';
 
             // Create auth button
             const authButton = document.createElement('button');
@@ -65,12 +68,14 @@
                 authContainer.appendChild(dropdown);
 
                 // Toggle dropdown on click
-                authButton.addEventListener('click', function() {
+                authButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
                     dropdown.classList.toggle('active');
                 });
 
                 // Close dropdown when clicking outside
-                document.addEventListener('click', function(e) {
+                document.addEventListener('click', (e) => {
                     if (!authContainer.contains(e.target)) {
                         dropdown.classList.remove('active');
                     }
@@ -99,6 +104,12 @@
                 if (postForm) {
                     postForm.classList.remove('hidden');
                 }
+                
+                // Show social section
+                const socialSection = document.getElementById('social-section');
+                if (socialSection) {
+                    socialSection.classList.remove('hidden');
+                }
             } else {
                 // User is not logged in
                 authButton.innerHTML = `<i class="fas fa-user"></i> Log in or Sign up`;
@@ -113,6 +124,12 @@
                 const postForm = document.getElementById('social-post-form');
                 if (postForm) {
                     postForm.classList.add('hidden');
+                }
+                
+                // Hide social section for non-authenticated users
+                const socialSection = document.getElementById('social-section');
+                if (socialSection) {
+                    socialSection.classList.add('hidden');
                 }
             }
         },
@@ -368,6 +385,18 @@
                     const postForm = document.getElementById('social-post-form');
                     if (postForm) {
                         postForm.classList.remove('hidden');
+                    }
+                    
+                    // Show social section
+                    const socialSection = document.getElementById('social-section');
+                    if (socialSection) {
+                        socialSection.classList.remove('hidden');
+                    }
+                    
+                    // If on mobile, make sure hamburger menu is visible
+                    const mainNav = document.getElementById('main-nav');
+                    if (mainNav && window.innerWidth < 768) {
+                        mainNav.classList.remove('active');
                     }
                 }, 1000);
             }, 600);

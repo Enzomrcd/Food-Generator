@@ -125,6 +125,7 @@ function setupEventListeners() {
     const mainNav = document.getElementById('main-nav');
 
     if (menuToggle && mainNav) {
+        // Improve hamburger menu functionality
         menuToggle.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -135,16 +136,9 @@ function setupEventListeners() {
         document.addEventListener('click', function(event) {
             if (mainNav.classList.contains('active') && 
                 !mainNav.contains(event.target) && 
-                event.target !== menuToggle) {
+                !menuToggle.contains(event.target)) {
                 mainNav.classList.remove('active');
             }
-        });
-        
-        // Handle clicks on the hamburger icon specifically
-        menuToggle.querySelector('i').addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            mainNav.classList.toggle('active');
         });
     }
 

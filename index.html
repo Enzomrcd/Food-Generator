@@ -25,19 +25,25 @@
                     <h1>CulinaryCompass</h1>
                 </div>
                 <p class="tagline">Discover flavors from every culture</p>
+
+                <!-- Auth Container -->
+                <div id="auth-container" class="auth-container"></div>
+
+                <!-- Hamburger Menu for Mobile -->
                 <div class="hamburger-menu">
                     <button id="menu-toggle" class="menu-toggle">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
-                <nav id="main-nav" class="main-nav">
+
+                <!-- Main Navigation -->
+                <nav class="main-nav" id="main-nav">
                     <ul class="nav-links">
-                        <li><a href="#" class="nav-link active" data-section="generator-section">Home</a></li>
-                        <li><a href="#" class="nav-link" data-section="social-section">Feed</a></li>
+                        <li><a href="#" class="nav-link active" data-section="home-section">Home</a></li>
+                        <li><a href="#" class="nav-link" data-section="feed-section">Feed</a></li>
                         <li><a href="#" class="nav-link" data-section="donate-section">Donate</a></li>
                     </ul>
                 </nav>
-                <div id="auth-container" class="auth-container"></div>
             </header>
 
             <main>
@@ -130,12 +136,12 @@
                     <div id="savedDishesList" class="saved-dishes-list"></div>
                 </div>
                 </section>
-                
+
                 <section id="social-section" class="content-section">
                     <h3 class="social-section-title">
                         <i class="fas fa-users"></i> Community Creations
                     </h3>
-                    
+
                     <div id="social-post-form" class="social-post-form social-feature hidden">
                         <h4>Share Your Creation</h4>
                         <form id="post-form">
@@ -160,12 +166,12 @@
                             </button>
                         </form>
                     </div>
-                    
+
                     <div id="posts-container" class="posts-container">
                         <p class="no-posts">No posts yet. Be the first to share your creation!</p>
                     </div>
                 </section>
-                
+
                 <section id="donate-section" class="content-section">
                     <h3 class="donate-section-title">
                         <i class="fas fa-hand-holding-heart"></i> Support CulinaryCompass
