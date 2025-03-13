@@ -1,8 +1,9 @@
 
 // Authentication module for CulinaryCompass
-// Uses Replit Auth for simple user authentication
+// Custom authentication system
 
 let currentUser = null;
+let users = JSON.parse(localStorage.getItem('users')) || [];
 
 // Initialize auth on page load
 document.addEventListener('DOMContentLoaded', function() {
@@ -15,38 +16,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Check if user is authenticated
 function checkAuthStatus() {
-    // Get auth cookie
-    const authCookie = getCookie('REPLIT_AUTH');
+    // Check if the user is logged in based on session
+    const userSession = localStorage.getItem('currentUserSession');
     
-    if (authCookie) {
-        // User is authenticated, fetch user info
-        fetchUserInfo();
-    } else {
-        // User is not authenticated
-        currentUser = null;
-        updateAuthUI(false);
-    }
-}
-
-// Fetch user info from headers
-async function fetchUserInfo() {
-    try {
-        const response = await fetch('/api/user', {
-            method: 'GET',
-            credentials: 'include'
-        });
-        
-        if (response.ok) {
-            const userData = await response.json();
-            currentUser = userData;
+    if (userSession) {
+        try {
+            // User is authenticated, restore user data
+            currentUser = JSON.parse(userSession);
             updateAuthUI(true);
-        } else {
-            // Error fetching user info
+        } catch (error) {
+            console.error('Error parsing user session:', error);
             currentUser = null;
             updateAuthUI(false);
         }
-    } catch (error) {
-        console.error('Error fetching user info:', error);
+    } else {
+        // User is not authenticated
         currentUser = null;
         updateAuthUI(false);
     }
@@ -115,11 +99,50 @@ function showAuthDialog() {
         authDialog.id = 'auth-dialog';
         authDialog.className = 'auth-dialog';
         
-        // Add auth iframe
+        // Add auth form
         authDialog.innerHTML = `
             <div class="auth-dialog-content">
                 <button id="close-auth-dialog" class="close-auth-btn">&times;</button>
-                <div id="auth-frame-container"></div>
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">Login</button>
+                    <button class="auth-tab" data-tab="signup">Sign Up</button>
+                </div>
+                
+                <div id="login-form" class="auth-form active">
+                    <h3>Login to Your Account</h3>
+                    <div class="form-group">
+                        <label for="login-username">Username</label>
+                        <input type="text" id="login-username" placeholder="Enter your username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter your password" required>
+                    </div>
+                    <div class="form-message" id="login-message"></div>
+                    <button id="login-submit" class="auth-submit-btn">Login</button>
+                </div>
+                
+                <div id="signup-form" class="auth-form">
+                    <h3>Create a New Account</h3>
+                    <div class="form-group">
+                        <label for="signup-username">Username</label>
+                        <input type="text" id="signup-username" placeholder="Choose a username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email (optional)</label>
+                        <input type="email" id="signup-email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="Choose a password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" placeholder="Confirm your password" required>
+                    </div>
+                    <div class="form-message" id="signup-message"></div>
+                    <button id="signup-submit" class="auth-submit-btn">Sign Up</button>
+                </div>
             </div>
         `;
         
@@ -133,18 +156,142 @@ function showAuthDialog() {
             });
         }
         
-        // Add auth script
-        const authFrameContainer = document.getElementById('auth-frame-container');
-        if (authFrameContainer) {
-            const script = document.createElement('script');
-            script.src = 'https://auth.util.repl.co/script.js';
-            script.setAttribute('authed', 'window.location.reload()');
-            authFrameContainer.appendChild(script);
+        // Add tab switching functionality
+        const authTabs = authDialog.querySelectorAll('.auth-tab');
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs and forms
+                authTabs.forEach(t => t.classList.remove('active'));
+                authDialog.querySelectorAll('.auth-form').forEach(form => form.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding form
+                this.classList.add('active');
+                const formId = this.getAttribute('data-tab') + '-form';
+                document.getElementById(formId).classList.add('active');
+            });
+        });
+        
+        // Add login form submit handler
+        const loginSubmit = document.getElementById('login-submit');
+        if (loginSubmit) {
+            loginSubmit.addEventListener('click', handleLogin);
+        }
+        
+        // Add signup form submit handler
+        const signupSubmit = document.getElementById('signup-submit');
+        if (signupSubmit) {
+            signupSubmit.addEventListener('click', handleSignup);
         }
     }
     
     // Show auth dialog
     authDialog.style.display = 'flex';
+}
+
+// Handle login form submission
+function handleLogin() {
+    const username = document.getElementById('login-username').value.trim();
+    const password = document.getElementById('login-password').value;
+    const messageElement = document.getElementById('login-message');
+    
+    // Basic validation
+    if (!username || !password) {
+        messageElement.innerHTML = 'Please enter both username and password';
+        messageElement.className = 'form-message error';
+        return;
+    }
+    
+    // Check if user exists
+    const user = users.find(u => u.username.toLowerCase() === username.toLowerCase() && u.password === password);
+    
+    if (user) {
+        // Login successful
+        messageElement.innerHTML = 'Login successful! Redirecting...';
+        messageElement.className = 'form-message success';
+        
+        // Set current user
+        currentUser = {
+            id: user.id,
+            name: user.username,
+            profileImage: user.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username)}`,
+            email: user.email || ''
+        };
+        
+        // Save user session
+        localStorage.setItem('currentUserSession', JSON.stringify(currentUser));
+        
+        // Update UI
+        updateAuthUI(true);
+        
+        // Close dialog after a short delay
+        setTimeout(() => {
+            const authDialog = document.getElementById('auth-dialog');
+            if (authDialog) {
+                authDialog.style.display = 'none';
+            }
+        }, 1000);
+    } else {
+        // Login failed
+        messageElement.innerHTML = 'Invalid username or password';
+        messageElement.className = 'form-message error';
+    }
+}
+
+// Handle signup form submission
+function handleSignup() {
+    const username = document.getElementById('signup-username').value.trim();
+    const email = document.getElementById('signup-email').value.trim();
+    const password = document.getElementById('signup-password').value;
+    const confirm = document.getElementById('signup-confirm').value;
+    const messageElement = document.getElementById('signup-message');
+    
+    // Basic validation
+    if (!username || !password) {
+        messageElement.innerHTML = 'Please enter username and password';
+        messageElement.className = 'form-message error';
+        return;
+    }
+    
+    if (password !== confirm) {
+        messageElement.innerHTML = 'Passwords do not match';
+        messageElement.className = 'form-message error';
+        return;
+    }
+    
+    // Check if username already exists
+    if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
+        messageElement.innerHTML = 'Username already exists';
+        messageElement.className = 'form-message error';
+        return;
+    }
+    
+    // Create new user
+    const newUser = {
+        id: 'user_' + Date.now(), // Generate a unique ID
+        username: username,
+        password: password,
+        email: email,
+        profileImage: `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}`,
+        createdAt: new Date().toISOString()
+    };
+    
+    // Add to users array
+    users.push(newUser);
+    
+    // Save to localStorage
+    localStorage.setItem('users', JSON.stringify(users));
+    
+    // Show success message
+    messageElement.innerHTML = 'Account created successfully! You can now log in.';
+    messageElement.className = 'form-message success';
+    
+    // Switch to login tab after a short delay
+    setTimeout(() => {
+        const loginTab = document.querySelector('.auth-tab[data-tab="login"]');
+        if (loginTab) {
+            loginTab.click();
+        }
+    }, 1500);
 }
 
 // Update social post form visibility
@@ -161,18 +308,15 @@ function updateSocialFormVisibility(isAuthenticated) {
 
 // Logout user
 function logoutUser() {
-    // Clear auth cookie
-    document.cookie = 'REPLIT_AUTH=; Max-Age=0; path=/; domain=.' + location.hostname.split('.').slice(-2).join('.');
+    // Clear user session
+    localStorage.removeItem('currentUserSession');
     
     // Update UI
     currentUser = null;
     updateAuthUI(false);
-    
-    // Reload page to clear any user-specific data
-    window.location.reload();
 }
 
-// Helper function to get cookie by name
+// Helper function to get cookie by name (keeping for compatibility)
 function getCookie(name) {
     const cookies = document.cookie.split(';');
     for (let i = 0; i < cookies.length; i++) {
@@ -223,3 +367,18 @@ window.auth = {
     checkAuthStatus,
     logoutUser
 };
+
+// Add some pre-defined users for testing
+if (users.length === 0) {
+    users = [
+        {
+            id: 'user_1',
+            username: 'demo',
+            password: 'password',
+            email: 'demo@example.com',
+            profileImage: 'https://ui-avatars.com/api/?name=Demo+User',
+            createdAt: new Date().toISOString()
+        }
+    ];
+    localStorage.setItem('users', JSON.stringify(users));
+}
