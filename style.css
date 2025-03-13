@@ -77,6 +77,63 @@
 }
 
 .menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+.menu-toggle:hover {
+    color: var(--primary-color);
+}
+
+/* Mobile user info improvements */
+#mobile-user-info {
+    padding: 15px 20px;
+    background: var(--bg-light);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-user-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.mobile-user-name {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+/* Make sure navigation is properly visible on larger screens */
+@media (min-width: 768px) {
+    .main-nav {
+        display: block;
+        position: static;
+        box-shadow: none;
+        width: auto;
+    }
+    
+    .nav-links {
+        flex-direction: row;
+    }
+    
+    .hamburger-menu {
+        display: none !important;
+    }
+    
+    #mobile-user-info {
+        display: none !important;
+    }
+}
+
+.menu-toggle {
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid var(--border-color);
     color: var(--text-color);

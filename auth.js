@@ -446,34 +446,28 @@
                 registeredUsers.push(user);
                 localStorage.setItem('registered_users', JSON.stringify(registeredUsers));
 
-                // Store current user
-                const currentUser = {
-                    id: userId,
-                    name: username,
-                    profileImage: `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}`,
-                    email: email || ''
-                };
-
-                this.currentUser = currentUser;
-                localStorage.setItem('auth_user', JSON.stringify(currentUser));
-
                 // Show success message
-                this.showMessage('signup-message', 'Account created successfully! Redirecting...', 'success');
+                this.showMessage('signup-message', 'Account created successfully! Please log in with your new account.', 'success');
 
-                // Close dialog and update UI
+                // Switch to login tab after successful registration
                 setTimeout(() => {
-                    document.body.removeChild(dialog);
-                    this.renderAuthUI();
-
-                    // Show post form after registration
-                    const postForm = document.getElementById('social-post-form');
-                    if (postForm) {
-                        postForm.classList.remove('hidden');
+                    // Switch to login tab
+                    const loginTab = dialog.querySelector('.auth-tab[data-tab="login"]');
+                    if (loginTab) {
+                        loginTab.click();
+                        
+                        // Pre-fill the username field
+                        const loginUsername = document.getElementById('login-username');
+                        if (loginUsername) {
+                            loginUsername.value = username;
+                            // Focus on the password field
+                            const loginPassword = document.getElementById('login-password');
+                            if (loginPassword) {
+                                loginPassword.focus();
+                            }
+                        }
                     }
-
-                    // Update mobile user info
-                    this.updateMobileUserInfo();
-                }, 1000);
+                }, 1500);
             }, 600);
         },
 
@@ -551,13 +545,19 @@
             if (mobileUserInfo) {
                 if (this.isAuthenticated()) {
                     mobileUserInfo.innerHTML = `
-                        <img src="${this.currentUser.profileImage || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(this.currentUser.name)}" alt="${this.currentUser.name}" class="user-avatar">
-                        <span>${this.currentUser.name}</span>
+                        <img src="${this.currentUser.profileImage || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(this.currentUser.name)}" alt="${this.currentUser.name}" class="mobile-user-avatar">
+                        <span class="mobile-user-name">${this.currentUser.name}</span>
                     `;
-                    mobileUserInfo.style.display = 'block';
+                    mobileUserInfo.style.display = 'flex';
                 } else {
                     mobileUserInfo.style.display = 'none';
                 }
+            }
+            
+            // Also update hamburger menu visibility
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            if (hamburgerMenu) {
+                hamburgerMenu.style.display = this.isAuthenticated() ? 'block' : 'none';
             }
         }
     };
