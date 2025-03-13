@@ -84,19 +84,15 @@ function updateAuthUI(isAuthenticated) {
         authContainer.innerHTML = `
             <div class="login-container">
                 <button id="login-button" class="login-btn">
-                    <i class="fas fa-sign-in-alt"></i> Log In with Replit
+                    <i class="fas fa-sign-in-alt"></i> Log In or Sign Up
                 </button>
-                <div id="auth-frame-container"></div>
             </div>
         `;
         
-        // Add Replit Auth script
-        const authFrameContainer = document.getElementById('auth-frame-container');
-        if (authFrameContainer) {
-            const script = document.createElement('script');
-            script.src = 'https://auth.util.repl.co/script.js';
-            script.setAttribute('authed', 'location.reload()');
-            authFrameContainer.appendChild(script);
+        // Add login event listener
+        const loginButton = document.getElementById('login-button');
+        if (loginButton) {
+            loginButton.addEventListener('click', showAuthDialog);
         }
         
         // Hide social features
@@ -107,6 +103,48 @@ function updateAuthUI(isAuthenticated) {
     
     // Update social post form visibility
     updateSocialFormVisibility(isAuthenticated);
+}
+
+// Show authentication dialog
+function showAuthDialog() {
+    // Create auth dialog if it doesn't exist
+    let authDialog = document.getElementById('auth-dialog');
+    
+    if (!authDialog) {
+        authDialog = document.createElement('div');
+        authDialog.id = 'auth-dialog';
+        authDialog.className = 'auth-dialog';
+        
+        // Add auth iframe
+        authDialog.innerHTML = `
+            <div class="auth-dialog-content">
+                <button id="close-auth-dialog" class="close-auth-btn">&times;</button>
+                <div id="auth-frame-container"></div>
+            </div>
+        `;
+        
+        document.body.appendChild(authDialog);
+        
+        // Add close button event listener
+        const closeButton = document.getElementById('close-auth-dialog');
+        if (closeButton) {
+            closeButton.addEventListener('click', () => {
+                authDialog.style.display = 'none';
+            });
+        }
+        
+        // Add auth script
+        const authFrameContainer = document.getElementById('auth-frame-container');
+        if (authFrameContainer) {
+            const script = document.createElement('script');
+            script.src = 'https://auth.util.repl.co/script.js';
+            script.setAttribute('authed', 'window.location.reload()');
+            authFrameContainer.appendChild(script);
+        }
+    }
+    
+    // Show auth dialog
+    authDialog.style.display = 'flex';
 }
 
 // Update social post form visibility
@@ -131,7 +169,7 @@ function logoutUser() {
     updateAuthUI(false);
     
     // Reload page to clear any user-specific data
-    location.reload();
+    window.location.reload();
 }
 
 // Helper function to get cookie by name

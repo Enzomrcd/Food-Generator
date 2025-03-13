@@ -1,4 +1,3 @@
-
 // Simple server for CulinaryCompass to handle authentication and API requests
 const http = require('http');
 const fs = require('fs');
@@ -13,18 +12,18 @@ const server = http.createServer((req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    
+
     // Handle preflight OPTIONS request
     if (req.method === 'OPTIONS') {
         res.writeHead(204);
         res.end();
         return;
     }
-    
+
     // Parse URL
     const url = new URL(req.url, `http://${req.headers.host}`);
     const pathname = url.pathname;
-    
+
     // Static file server
     if (req.method === 'GET' && !pathname.startsWith('/api/')) {
         // Default to index.html for root path
@@ -32,10 +31,10 @@ const server = http.createServer((req, res) => {
         if (pathname === '/') {
             filePath = './index.html';
         }
-        
+
         // Get file extension
         const extname = path.extname(filePath);
-        
+
         // Set content type based on file extension
         let contentType = 'text/html';
         switch (extname) {
@@ -59,7 +58,7 @@ const server = http.createServer((req, res) => {
                 contentType = 'image/gif';
                 break;
         }
-        
+
         // Read and serve file
         fs.readFile(filePath, (err, content) => {
             if (err) {
@@ -82,48 +81,53 @@ const server = http.createServer((req, res) => {
         });
         return;
     }
-    
+
     // API endpoints
     if (pathname === '/api/user' && req.method === 'GET') {
         // Parse Replit Auth headers
         const userId = req.headers['x-replit-user-id'];
         const userName = req.headers['x-replit-user-name'];
-        
+        const userRoles = req.headers['x-replit-user-roles'] || '';
+
         if (userId && userName) {
             // Get user from database or create new user
             let user = users.find(u => u.id === userId);
-            
+
             if (!user) {
                 // Create new user
                 user = {
                     id: userId,
                     name: userName,
-                    profileImage: `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}`,
+                    roles: userRoles,
+                    profileImage: `https://replit.com/cdn-cgi/image/width=32,quality=80,format=auto/${userName}`,
                     createdAt: new Date().toISOString()
                 };
-                
+
                 // Add to database
                 users.push(user);
+                console.log(`New user created: ${userName} (${userId})`);
             }
-            
+
             // Return user data
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify(user));
+            console.log(`User authenticated: ${userName} (${userId})`);
         } else {
             // User not authenticated
             res.writeHead(401, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ error: 'Not authenticated' }));
+            console.log('Authentication failed: No valid headers found');
         }
         return;
     }
-    
+
     // Handle 404 for API routes
     if (pathname.startsWith('/api/')) {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: 'Endpoint not found' }));
         return;
     }
-    
+
     // Default handler for unmatched routes
     res.writeHead(404, { 'Content-Type': 'text/plain' });
     res.end('Not Found');
