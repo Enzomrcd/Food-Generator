@@ -730,6 +730,7 @@ footer {
     margin-top: 10px;
 }
 
+/* GitHub Button Styling */
 .github-button {
     display: inline-flex;
     align-items: center;
@@ -741,6 +742,7 @@ footer {
     text-decoration: none;
     font-weight: 500;
     transition: var(--transition);
+    margin-top: 10px;
 }
 
 .github-button:hover {
@@ -749,8 +751,48 @@ footer {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.github-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .github-button i {
     font-size: 1.2rem;
+}
+
+/* Improved Hamburger Menu Styling */
+.hamburger-menu {
+    display: none; /* Hidden by default, shown when user is logged in */
+    position: relative;
+    z-index: 1000;
+}
+
+.menu-toggle {
+    background: transparent;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+}
+
+.menu-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.menu-toggle:active {
+    transform: scale(0.95);
+}
+
+/* Animation for hamburger to X */
+.menu-toggle .fa-times {
+    color: #d9534f;
 }
 
 .donation-section {
