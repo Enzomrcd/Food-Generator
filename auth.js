@@ -71,11 +71,16 @@ function updateAuthUI(isAuthenticated) {
         // User is authenticated, show user info and logout button
         authContainer.innerHTML = `
             <div class="user-info">
-                <img src="${currentUser.profileImage || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(currentUser.name)}" alt="${currentUser.name}" class="user-avatar">
+                <img src="${currentUser.profileImage || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(currentUser.name)}" alt="${currentUser.name}" class="user-avatar" id="profile-avatar">
                 <span class="user-name">${currentUser.name}</span>
-                <button id="logout-button" class="logout-btn">
-                    <i class="fas fa-sign-out-alt"></i> Log Out
-                </button>
+                <div class="user-actions">
+                    <button id="profile-button" class="profile-btn">
+                        <i class="fas fa-user-cog"></i>
+                    </button>
+                    <button id="logout-button" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
             </div>
         `;
         
@@ -83,6 +88,18 @@ function updateAuthUI(isAuthenticated) {
         const logoutButton = document.getElementById('logout-button');
         if (logoutButton) {
             logoutButton.addEventListener('click', logoutUser);
+        }
+
+        // Add profile edit button event listener
+        const profileButton = document.getElementById('profile-button');
+        if (profileButton) {
+            profileButton.addEventListener('click', showProfileDialog);
+        }
+        
+        // Add profile avatar click event for quick profile edit
+        const profileAvatar = document.getElementById('profile-avatar');
+        if (profileAvatar) {
+            profileAvatar.addEventListener('click', showProfileDialog);
         }
         
         // Show social features
@@ -402,6 +419,159 @@ window.auth = {
     checkAuthStatus,
     logoutUser
 };
+
+// Show profile editing dialog
+function showProfileDialog() {
+    // Create profile dialog if it doesn't exist
+    let profileDialog = document.getElementById('profile-dialog');
+    
+    if (!profileDialog) {
+        profileDialog = document.createElement('div');
+        profileDialog.id = 'profile-dialog';
+        profileDialog.className = 'auth-dialog';
+        
+        // Add profile form
+        profileDialog.innerHTML = `
+            <div class="auth-dialog-content">
+                <button id="close-profile-dialog" class="close-auth-btn">&times;</button>
+                <h3>Edit Your Profile</h3>
+                <div class="profile-form">
+                    <div class="profile-image-container">
+                        <img src="${currentUser.profileImage}" alt="${currentUser.name}" class="profile-image-preview">
+                        <div class="profile-image-overlay">
+                            <i class="fas fa-camera"></i>
+                            <span>Change</span>
+                        </div>
+                        <input type="file" id="profile-image-upload" accept="image/*" class="profile-image-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-username">Display Name</label>
+                        <input type="text" id="profile-username" value="${currentUser.name}" placeholder="Your display name">
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-email">Email (optional)</label>
+                        <input type="email" id="profile-email" value="${currentUser.email || ''}" placeholder="Your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-password">New Password (leave blank to keep current)</label>
+                        <input type="password" id="profile-password" placeholder="New password">
+                    </div>
+                    <div class="form-message" id="profile-message"></div>
+                    <button id="profile-save" class="auth-submit-btn">Save Changes</button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(profileDialog);
+        
+        // Add close button event listener
+        const closeButton = document.getElementById('close-profile-dialog');
+        if (closeButton) {
+            closeButton.addEventListener('click', () => {
+                profileDialog.style.display = 'none';
+            });
+        }
+        
+        // Add profile image upload functionality
+        const profileImageUpload = document.getElementById('profile-image-upload');
+        const profileImagePreview = document.querySelector('.profile-image-preview');
+        const profileImageContainer = document.querySelector('.profile-image-container');
+        
+        if (profileImageUpload && profileImagePreview) {
+            profileImageContainer.addEventListener('click', () => {
+                profileImageUpload.click();
+            });
+            
+            profileImageUpload.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        profileImagePreview.src = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+        
+        // Add save button event listener
+        const saveButton = document.getElementById('profile-save');
+        if (saveButton) {
+            saveButton.addEventListener('click', saveProfileChanges);
+        }
+    } else {
+        // Update existing dialog with current user data
+        const profileImagePreview = profileDialog.querySelector('.profile-image-preview');
+        const profileUsername = profileDialog.querySelector('#profile-username');
+        const profileEmail = profileDialog.querySelector('#profile-email');
+        
+        if (profileImagePreview) profileImagePreview.src = currentUser.profileImage;
+        if (profileUsername) profileUsername.value = currentUser.name;
+        if (profileEmail) profileEmail.value = currentUser.email || '';
+    }
+    
+    // Show profile dialog
+    profileDialog.style.display = 'flex';
+}
+
+// Save profile changes
+function saveProfileChanges() {
+    const profileUsername = document.getElementById('profile-username').value.trim();
+    const profileEmail = document.getElementById('profile-email').value.trim();
+    const profilePassword = document.getElementById('profile-password').value;
+    const profileImagePreview = document.querySelector('.profile-image-preview');
+    const messageElement = document.getElementById('profile-message');
+    
+    // Basic validation
+    if (!profileUsername) {
+        messageElement.innerHTML = 'Display name cannot be empty';
+        messageElement.className = 'form-message error';
+        return;
+    }
+    
+    // Find user in users array
+    const userIndex = users.findIndex(u => u.id === currentUser.id);
+    if (userIndex === -1) {
+        messageElement.innerHTML = 'User not found';
+        messageElement.className = 'form-message error';
+        return;
+    }
+    
+    // Update user data
+    users[userIndex].username = profileUsername;
+    if (profileEmail) users[userIndex].email = profileEmail;
+    if (profilePassword) users[userIndex].password = profilePassword;
+    if (profileImagePreview && profileImagePreview.src) {
+        users[userIndex].profileImage = profileImagePreview.src;
+    }
+    
+    // Update current user
+    currentUser = {
+        id: users[userIndex].id,
+        name: users[userIndex].username,
+        profileImage: users[userIndex].profileImage,
+        email: users[userIndex].email || ''
+    };
+    
+    // Save to localStorage
+    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('currentUserSession', JSON.stringify(currentUser));
+    
+    // Show success message
+    messageElement.innerHTML = 'Profile updated successfully!';
+    messageElement.className = 'form-message success';
+    
+    // Update UI
+    updateAuthUI(true);
+    
+    // Close dialog after a short delay
+    setTimeout(() => {
+        const profileDialog = document.getElementById('profile-dialog');
+        if (profileDialog) {
+            profileDialog.style.display = 'none';
+        }
+    }, 1500);
+}
 
 // Add some pre-defined users for testing
 if (users.length === 0) {

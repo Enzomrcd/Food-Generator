@@ -18,6 +18,45 @@ document.addEventListener('DOMContentLoaded', function() {
     const mealTypeTagElement = document.getElementById('mealTypeTag');
     const dietTagElement = document.getElementById('dietTag');
     const savedDishesList = document.getElementById('savedDishesList');
+    
+    // Setup hamburger menu
+    const menuToggle = document.getElementById('menu-toggle');
+    const mainNav = document.getElementById('main-nav');
+    
+    if (menuToggle && mainNav) {
+        menuToggle.addEventListener('click', function() {
+            mainNav.classList.toggle('active');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!mainNav.contains(event.target) && event.target !== menuToggle) {
+                mainNav.classList.remove('active');
+            }
+        });
+    }
+    
+    // Setup navigation
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Remove active class from all links and sections
+            navLinks.forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+            
+            // Add active class to clicked link
+            this.classList.add('active');
+            
+            // Show corresponding section
+            const sectionId = this.getAttribute('data-section');
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Close mobile menu
+            mainNav.classList.remove('active');
+        });
+    });
 
     // Initialize saved dishes from localStorage
     let savedDishes = JSON.parse(localStorage.getItem('savedDishes')) || [];

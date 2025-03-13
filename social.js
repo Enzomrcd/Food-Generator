@@ -618,14 +618,8 @@ function handleLikeComment() {
 // Social features module for CulinaryCompass
 // Handles posts, comments, and image uploads
 
-// In-memory database for development
-// In a production app, this would be a real database
-const socialData = {
-    posts: [],
-    comments: [],
-    nextPostId: 1,
-    nextCommentId: 1
-};
+// Note: socialData is already defined above, so we're just extending it here
+// This fixes the "Identifier 'socialData' has already been declared" error
 
 // Initialize social features
 document.addEventListener('DOMContentLoaded', function() {

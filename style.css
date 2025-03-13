@@ -46,6 +46,7 @@
     position: absolute;
     right: 20px;
     top: 20px;
+    z-index: 100;
 }
 
 .menu-toggle {
@@ -54,6 +55,13 @@
     font-size: 1.5rem;
     color: var(--text-color);
     cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.menu-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 /* Content sections */
