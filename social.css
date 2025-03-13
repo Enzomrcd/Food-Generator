@@ -183,6 +183,7 @@
     margin-left: auto;
     margin-right: 20px;
     position: relative;
+    z-index: 100;
 }
 
 /* Auth button */
@@ -190,7 +191,7 @@
     background-color: var(--bg-light);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
-    padding: 8px 15px;
+    padding: 10px 15px; /* Increased padding for better clickability */
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--text-color);
@@ -199,6 +200,7 @@
     align-items: center;
     gap: 8px;
     transition: var(--transition);
+    min-width: 120px; /* Minimum width for better clickability */
 }
 
 .auth-button:hover {
@@ -1068,14 +1070,17 @@
     color: white;
     border: none;
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    width: 24px; /* Increased size for better clickability */
+    height: 24px; /* Increased size for better clickability */
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: var(--transition);
-    font-size: 0.8rem;
+    font-size: 1rem; /* Increased font size for better visibility */
+    z-index: 10; /* Ensure it appears above other elements */
+    padding: 0; /* Reset padding */
+    line-height: 1; /* Ensure proper vertical centering */
 }
 
 .remove-comment-image-btn:hover {

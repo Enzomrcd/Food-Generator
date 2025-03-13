@@ -320,23 +320,36 @@
 
         // Login user
         login: function(username, password, dialog) {
-            // For demo purposes, just check if username and password are not empty
-            // In a real app, you would validate against a database
-
+            // For demo purposes, check if username and password are not empty
             if (!username || !password) {
                 this.showMessage('login-message', 'Please enter both username and password.', 'error');
                 return;
             }
 
+            // Check if the user exists in localStorage (registered users)
+            const registeredUsers = JSON.parse(localStorage.getItem('registered_users')) || [];
+            const userExists = registeredUsers.find(user => user.name === username);
+            
+            if (!userExists) {
+                this.showMessage('login-message', 'User does not exist. Please sign up first.', 'error');
+                return;
+            }
+            
+            // In a real app, you would verify the password securely
+            // This is a simple check for demo purposes
+            if (userExists.password !== password) {
+                this.showMessage('login-message', 'Incorrect password. Please try again.', 'error');
+                return;
+            }
+
             // Simulate API call
             setTimeout(() => {
-                // For demo, allow any username/password combo
-                // In a real app, you'd check against a database
+                // Get the existing user
                 const user = {
-                    id: 'user_' + Date.now(),
+                    id: userExists.id,
                     name: username,
-                    profileImage: `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}`,
-                    email: ''
+                    profileImage: userExists.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}`,
+                    email: userExists.email || ''
                 };
 
                 // Store user
@@ -373,20 +386,38 @@
                 return;
             }
 
+            // Check if username already exists
+            const registeredUsers = JSON.parse(localStorage.getItem('registered_users')) || [];
+            if (registeredUsers.some(user => user.name === username)) {
+                this.showMessage('signup-message', 'Username already exists. Please choose another.', 'error');
+                return;
+            }
+
             // Simulate API call
             setTimeout(() => {
-                // For demo, always succeed
-                // In a real app, you'd check for existing users
+                const userId = 'user_' + Date.now();
                 const user = {
-                    id: 'user_' + Date.now(),
+                    id: userId,
                     name: username,
+                    password: password, // In a real app, this would be hashed
                     profileImage: `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}`,
                     email: email || ''
                 };
 
-                // Store user
-                this.currentUser = user;
-                localStorage.setItem('auth_user', JSON.stringify(user));
+                // Store in registered users
+                registeredUsers.push(user);
+                localStorage.setItem('registered_users', JSON.stringify(registeredUsers));
+
+                // Store current user
+                const currentUser = {
+                    id: userId,
+                    name: username,
+                    profileImage: `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}`,
+                    email: email || ''
+                };
+                
+                this.currentUser = currentUser;
+                localStorage.setItem('auth_user', JSON.stringify(currentUser));
 
                 // Show success message
                 this.showMessage('signup-message', 'Account created successfully! Redirecting...', 'success');

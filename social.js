@@ -139,6 +139,13 @@ function setupEventListeners() {
                 mainNav.classList.remove('active');
             }
         });
+        
+        // Handle clicks on the hamburger icon specifically
+        menuToggle.querySelector('i').addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            mainNav.classList.toggle('active');
+        });
     }
 
     // Post form submission
