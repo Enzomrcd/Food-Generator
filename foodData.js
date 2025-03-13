@@ -209,7 +209,7 @@ const foodData = {
                 { 
                     name: "Sinigang", 
                     description: "Sour soup made with tamarind, various vegetables, and meat or seafood.",
-                    tutorialLink: "https://www.youtube.com/watch?v=CG-VLdbGKMU" 
+                    tutorialLink: "https://youtu.be/7QKr1oy4Ykc?si=4C5-4vyQRxx9iATN" 
                 },
                 { 
                     name: "Pancit Canton", 
@@ -219,7 +219,7 @@ const foodData = {
                 { 
                     name: "Kare-Kare", 
                     description: "Rich Filipino stew with oxtail, vegetables, and a creamy peanut sauce, traditionally served with bagoong (shrimp paste).",
-                    tutorialLink: "https://www.youtube.com/watch?v=nWIhBKqQ1pE"
+                    tutorialLink: "https://youtu.be/TvqJt6NYVN4?si=dNmqfObgFiFlWvyK"
                 }
             ],
             vegetarian: [
