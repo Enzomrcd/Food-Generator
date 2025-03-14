@@ -557,7 +557,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <button class="close-modal">&times;</button>
             </div>
             <div class="modal-body">
-                <p>Thank you for supporting CulinaryCompass! Your donation helps us continue developing and improving this tool.</p>
+                <p>Thank you for supporting my project. Your donation helps me continue developing and improving this tool.</p>
                 <div class="gcash-info">
                     <p>GCash Number: <strong>${gcashNumber}</strong></p>
                     <div class="qr-code-container">
