@@ -14,65 +14,70 @@ document.addEventListener('DOMContentLoaded', function() {
   // ---------------------------
   // Image Preview Functionality
   // ---------------------------
-  postImageInput.addEventListener('change', function() {
-    const file = this.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        postImagePreview.src = e.target.result;
-        imagePreviewContainer.style.display = 'block';
-      };
-      reader.readAsDataURL(file);
-    } else {
-      imagePreviewContainer.style.display = 'none';
-    }
-  });
+  if (postImageInput) {
+    postImageInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          postImagePreview.src = e.target.result;
+          imagePreviewContainer.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        imagePreviewContainer.style.display = 'none';
+      }
+    });
+  }
 
-  removePostImageBtn.addEventListener('click', function() {
-    postImageInput.value = "";
-    imagePreviewContainer.style.display = 'none';
-  });
+  if (removePostImageBtn) {
+    removePostImageBtn.addEventListener('click', function() {
+      postImageInput.value = "";
+      imagePreviewContainer.style.display = 'none';
+    });
+  }
 
   // ---------------------------
   // Post Form Submission
   // ---------------------------
-  postForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const title = postTitleInput.value.trim();
-    const content = postContentInput.value.trim();
-    let imageData = null;
-    if (postImageInput.files[0]) {
-      // Use the image preview's src which is already set
-      imageData = postImagePreview.src;
-    }
+  if (postForm) {
+    postForm.addEventListener('submit', function(e) {
+      e.preventDefault();
 
-    if (!title || !content) {
-      alert("Please fill in both the title and content for your post.");
-      return;
-    }
-    
-    // Retrieve current user (if logged in) from sessionStorage; otherwise, default to "Anonymous"
-    const currentUser = sessionStorage.getItem('currentUser') || 'Anonymous';
-    
-    const newPost = {
-      title,
-      content,
-      image: imageData,
-      author: currentUser,
-      timestamp: new Date().toISOString()
-    };
+      const title = postTitleInput.value.trim();
+      const content = postContentInput.value.trim();
+      let imageData = null;
+      if (postImageInput.files && postImageInput.files[0]) {
+        imageData = postImagePreview.src;
+      }
 
-    // Save the new post to localStorage (prepend for latest-first order)
-    let posts = JSON.parse(localStorage.getItem('posts')) || [];
-    posts.unshift(newPost);
-    localStorage.setItem('posts', JSON.stringify(posts));
+      if (!title || !content) {
+        alert("Please fill in both the title and content for your post.");
+        return;
+      }
 
-    // Render posts and reset the form
-    renderPosts();
-    postForm.reset();
-    imagePreviewContainer.style.display = 'none';
-  });
+      // Retrieve current user from sessionStorage; default to "Anonymous" if not logged in
+      const author = sessionStorage.getItem('currentUser') || "Anonymous";
+
+      const newPost = {
+        title,
+        content,
+        image: imageData,
+        author,
+        timestamp: new Date().toISOString()
+      };
+
+      // Save the new post to localStorage (prepend for newest first order)
+      let posts = JSON.parse(localStorage.getItem('posts')) || [];
+      posts.unshift(newPost);
+      localStorage.setItem('posts', JSON.stringify(posts));
+
+      // Render posts and reset the form
+      renderPosts();
+      postForm.reset();
+      imagePreviewContainer.style.display = 'none';
+    });
+  }
 
   // ---------------------------
   // Render Posts Function
@@ -80,28 +85,29 @@ document.addEventListener('DOMContentLoaded', function() {
   function renderPosts() {
     let posts = JSON.parse(localStorage.getItem('posts')) || [];
     postsContainer.innerHTML = '';
-    
+
     if (posts.length === 0) {
       postsContainer.innerHTML = '<p class="no-posts">No posts yet. Be the first to share your creation!</p>';
       return;
     }
-    
+
     posts.forEach((post) => {
       const postCard = document.createElement('div');
       postCard.className = 'post-card';
-      
+
       // Format timestamp for display
       const postDate = new Date(post.timestamp).toLocaleString();
-      
-      let postImageHtml = '';
+
+      // If an image exists, prepare the image HTML
+      let postImageHTML = '';
       if (post.image) {
-        postImageHtml = `
+        postImageHTML = `
           <div class="post-image-container">
             <img src="${post.image}" alt="Post Image" class="post-image">
           </div>
         `;
       }
-      
+
       postCard.innerHTML = `
         <div class="post-header">
           <div class="post-author">
@@ -115,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="post-content">
           <h3 class="post-title">${post.title}</h3>
           <p class="post-text">${post.content}</p>
-          ${postImageHtml}
+          ${postImageHTML}
         </div>
         <div class="post-actions">
           <button class="like-button"><i class="fas fa-heart"></i> Like</button>
@@ -131,4 +137,3 @@ document.addEventListener('DOMContentLoaded', function() {
   // ---------------------------
   renderPosts();
 });
-    
