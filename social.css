@@ -1,6 +1,9 @@
 
 /* Authentication styles */
 .auth-container {
+    position: absolute;
+    top: 20px;
+    right: 70px;
     display: flex;
     align-items: center;
     margin-left: auto;
