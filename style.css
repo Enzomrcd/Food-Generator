@@ -269,9 +269,12 @@
     
     /* Layout for desktop - flexbox arrangement */
     header {
-        display: flex;
-        justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
     }
+    
     
     .header-left {
         display: flex;
