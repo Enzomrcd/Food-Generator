@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // In-memory user database for demonstration purposes.
-// In production, use a persistent database and hash passwords!
+// NOTE: In production, use a persistent database and securely hash passwords!
 const users = [
   {
     id: 'user_1',
