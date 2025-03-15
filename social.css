@@ -1,13 +1,10 @@
-
-/* Authentication styles */
 .auth-container {
-    position: absolute;
-    top: 20px;
-    right: 70px;
+    position: relative; /* Changed from absolute */
     display: flex;
     align-items: center;
     margin-left: auto;
     padding: 0 15px;
+    z-index: 100;
 }
 
 .login-btn, .logout-btn {
@@ -54,27 +51,33 @@
     color: #333;
 }
 
+
 .auth-dialog {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none; /* Shown when active */
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    backdrop-filter: blur(3px);
+}
+
+.auth-dialog.active {
+    display: flex; /* Use a class to activate it */
 }
 
 .auth-dialog-content {
     background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    position: relative;
+    border-radius: 12px;
+    padding: 30px;
     width: 90%;
     max-width: 400px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
 .close-auth-btn {
@@ -85,9 +88,14 @@
     border: none;
     font-size: 24px;
     cursor: pointer;
-    color: #666;
+    color: #888;
 }
 
+.close-auth-btn:hover {
+    color: var(--primary-color);
+}
+
+    
 /* Auth Tabs */
 .auth-tabs {
     display: flex;
