@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // ----------------------
     const generateButton = document.getElementById('generateButton');
     const saveButton = document.getElementById('saveButton');
-    const donateButton = document.getElementById('donateButton');
+    // Optional elements that may not exist
+    const donateButton = document.getElementById('donateButton') || null;
     const cuisineSelect = document.getElementById('cuisine');
     const mealTypeSelect = document.getElementById('mealType');
     const dietSelect = document.getElementById('diet');
@@ -71,7 +72,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // ----------------------
     generateButton.addEventListener('click', generateFood);
     saveButton.addEventListener('click', saveCurrentDish);
-    donateButton.addEventListener('click', openGCashDonation);
+    if (donateButton) {
+        donateButton.addEventListener('click', openGCashDonation);
+    }
 
     // Current generated dish (object)
     let currentDish = null;
