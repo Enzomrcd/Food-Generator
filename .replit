@@ -1,10 +1,11 @@
 modules = ["nodejs-20", "web"]
+run = "npm run start"
 
 [nix]
 channel = "stable-24_05"
 
 [workflows]
-runButton = "Run"
+runButton = "Food Generator Server"
 
 [[workflows.workflow]]
 name = "Project"
@@ -40,7 +41,7 @@ task = "shell.exec"
 args = "node server.js"
 
 [deployment]
-run = ["sh", "-c", "node server.js"]
+run = ["sh", "-c", "npm run start"]
 
 [[ports]]
 localPort = 5000

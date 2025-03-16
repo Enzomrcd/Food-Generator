@@ -1,0 +1,53 @@
+Here’s the improved version with your addition:  
+
+---
+
+### **Project Issues & Fixes Needed**  
+
+I have encountered several problems with my project that need to be fixed. Below are the specific issues and improvements I want to see:  
+
+#### **1. Login & Sign Up Button Positioning**  
+- On larger screens, the **Login and Sign Up buttons** are incorrectly positioned, overlapping and interrupting the **"Discover flavors from every culture"** text.  
+- On smaller screens, these buttons are **not centered properly**. Adjust their placement so they appear correctly on all screen sizes.  
+
+#### **2. Login & Sign Up Forms**  
+- When clicking **Login or Sign Up**, the forms appear at the **bottom of the screen**, which is not visually appealing.  
+- **Fix the positioning**: Ensure the forms appear in the **center of the screen** when opened.  
+- **Improve the UI**: Make the forms match the overall theme with a **modern, contemporary look**.  
+
+#### **3. Navigation Logic (Home, Feed, Donate)**  
+- Upon opening the website, the **Home, Feed, and Donate buttons are visible**, even when a user **has not logged in**.  
+- Fix this by ensuring that:
+  - Only **"Donate"** is visible before login.  
+  - **Home and Feed should only appear once the user logs in**, along with the **Donate** option.  
+  - **However, the "Generate Food" feature should remain accessible at all times, regardless of login status.**  
+
+#### **4. Feed Issues (Posting & Interaction)**  
+- When logged in, the **Feed is empty** and lacks functionality.  
+- Fix this by adding:
+  - A **post button** where users can create posts.  
+  - The ability to **comment and share** posts.  
+  - **Image uploads** for both posts and comments.  
+
+#### **5. Profile Section Improvements**  
+- The **"Welcome, (username)" & Logout button** are positioned incorrectly, overlapping the **"Discover flavors..."** text.  
+- **Fix the positioning** so it adapts properly to different screen sizes.  
+- Add a **profile icon** where users can:
+  - Upload/change their **profile picture**.  
+  - Edit their **name, username, and password** for login credentials.  
+
+#### **6. Donate Section Enhancements**  
+- The **Donate section** is empty.  
+- Display the **"gcash.jpeg"** image properly within the section.  
+- Ensure the **UI design** is visually appealing.  
+
+#### **7. Mobile Navigation (Hamburger Menu)**  
+- Add a **hamburger menu** for navigation (**Home, Feed, Donate**) when using a smaller device.  
+- Ensure the menu appears **on the left**, with the **user profile icon positioned at the top** once logged in.  
+
+#### **8. Icons for Navigation**  
+- Improve usability by adding **icons** for **Home, Feed, and Donate**.  
+
+---
+
+This version makes everything clearer and ensures the "Generate Food" feature remains accessible. Let me know if you need further tweaks! 🚀
