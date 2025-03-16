@@ -1042,9 +1042,9 @@ footer {
 .auth-container {
     display: flex;
     gap: 10px;
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    justify-content: center;
+    width: 100%;
+    padding: 20px 0;
     z-index: 100;
 }
 
