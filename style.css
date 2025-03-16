@@ -1064,3 +1064,37 @@ footer {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
+
+/* Responsive auth container styles */
+@media (min-width: 769px) {
+    .auth-container {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .tagline {
+        margin-top: 10px;
+        margin-right: 200px; /* Make space for auth buttons */
+    }
+}
+
+@media (max-width: 768px) {
+    .auth-container {
+        position: relative;
+        top: auto;
+        right: auto;
+        justify-content: center;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .auth-btn {
+        flex: 0 1 120px;
+        text-align: center;
+    }
+
+    .tagline {
+        margin: 10px 0;
+    }
+}
