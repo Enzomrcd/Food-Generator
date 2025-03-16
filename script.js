@@ -27,9 +27,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // HAMBURGER MENU SETUP
     // ----------------------
     if (menuToggle && mainNav) {
+        const menuIcon = menuToggle.querySelector('i');
         menuToggle.addEventListener('click', function(event) {
             event.stopPropagation();
             mainNav.classList.toggle('active');
+            menuIcon.classList.toggle('fa-bars');
+            menuIcon.classList.toggle('fa-times');
         });
         // Close menu when clicking outside
         document.addEventListener('click', function(event) {

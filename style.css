@@ -1,4 +1,3 @@
-
 /* Add these styles to the beginning of your style.css file */
 
 /* Navigation styles */
@@ -119,15 +118,15 @@
         box-shadow: none;
         width: auto;
     }
-    
+
     .nav-links {
         flex-direction: row;
     }
-    
+
     .hamburger-menu {
         display: none !important;
     }
-    
+
     #mobile-user-info {
         display: none !important;
     }
@@ -220,7 +219,7 @@
     .hamburger-menu {
         display: none;
     }
-    
+
     .main-nav {
         display: block;
         position: static;
@@ -229,21 +228,21 @@
         margin-left: auto;
         margin-right: 20px;
     }
-    
+
     .nav-links {
         flex-direction: row;
     }
-    
+
     .nav-link {
         padding: 10px 15px;
         border-radius: var(--border-radius);
     }
-    
+
     .nav-link:hover, .nav-link.active {
         background-color: var(--primary-color);
         color: white;
     }
-    
+
     header {
         display: flex;
         align-items: center;
@@ -251,22 +250,24 @@
         position: relative;
         padding: 20px;
     }
-    
+
     .logo-container {
         margin-right: 20px;
     }
-    
+
     .tagline {
         margin-right: auto;
     }
-    
+
     .auth-container {
-        position: static;
-        margin-left: 20px;
-        margin-right: 0;
-        transform: none;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        gap: 10px;
     }
-    
+
     /* Layout for desktop - flexbox arrangement */
     header {
     display: flex;
@@ -274,13 +275,13 @@
     justify-content: space-between;
     padding: 10px 20px;
     }
-    
-    
+
+
     .header-left {
         display: flex;
         align-items: center;
     }
-    
+
     .header-right {
         display: flex;
         align-items: center;
@@ -852,6 +853,32 @@ footer {
 }
 
 /* GCash donation modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+}
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -981,24 +1008,24 @@ footer {
     .container {
         padding: 15px;
     }
-    
+
     h1 {
         font-size: 2.2rem;
     }
-    
+
     .logo-icon {
         font-size: 2rem;
     }
-    
+
     main {
         padding: 20px;
     }
-    
+
     .button-container {
         flex-direction: column;
         gap: 10px;
     }
-    
+
     button {
         width: 100%;
     }
@@ -1008,15 +1035,15 @@ footer {
     h1 {
         font-size: 1.8rem;
     }
-    
+
     .input-section {
         grid-template-columns: 1fr;
     }
-    
+
     .food-name {
         font-size: 1.8rem;
     }
-    
+
     .gcash-modal {
         width: 95%;
     }

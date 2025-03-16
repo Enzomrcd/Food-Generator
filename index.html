@@ -157,6 +157,39 @@
 
         <section id="donate-section" class="content-section">
           <div class="donate-content">
+
+        <section id="feed-section" class="content-section">
+          <div class="feed-container">
+            <div class="post-form-container">
+              <form id="post-form" class="social-post-form">
+                <h4>Create a Post</h4>
+                <div class="post-form-group">
+                  <input type="text" id="post-title" placeholder="Post title" required>
+                </div>
+                <div class="post-form-group">
+                  <textarea id="post-content" placeholder="Share your thoughts..." required></textarea>
+                </div>
+                <div class="post-form-group">
+                  <label class="file-upload-label">
+                    <i class="fas fa-image"></i> Add Image
+                    <input type="file" id="post-image" accept="image/*" class="file-upload-input">
+                  </label>
+                  <div id="post-image-preview-container" class="image-preview-container" style="display: none;">
+                    <img id="post-image-preview" alt="Preview">
+                    <button type="button" id="remove-post-image" class="remove-image-btn">&times;</button>
+                  </div>
+                </div>
+                <button type="submit" class="post-submit-btn">
+                  <i class="fas fa-paper-plane"></i> Post
+                </button>
+              </form>
+            </div>
+            <div id="posts-container" class="posts-container">
+              <!-- Posts will be dynamically added here -->
+            </div>
+          </div>
+        </section>
+
             <h2 class="donate-section-title"><i class="fas fa-heart"></i> Support Us</h2>
             <div class="gcash-info">
               <p>If you'd like to support CulinaryCompass, you can donate via GCash:</p>

@@ -124,18 +124,23 @@ document.addEventListener('DOMContentLoaded', function() {
   // Update the UI based on login state
   function updateAuthUI() {
     const currentUser = sessionStorage.getItem('currentUser');
+    const homeLink = document.querySelector('[data-section="home-section"]')?.parentElement;
+    const feedLink = document.querySelector('[data-section="feed-section"]')?.parentElement;
+
     if (currentUser) {
-      // Hide login/signup buttons, show user info
       loginBtn.classList.add('hidden');
       signupBtn.classList.add('hidden');
       userInfoDiv.classList.remove('hidden');
       welcomeMsg.innerText = `Welcome, ${currentUser}`;
+      if (homeLink) homeLink.style.display = 'block';
+      if (feedLink) feedLink.style.display = 'block';
     } else {
-      // Show login/signup buttons, hide user info
       loginBtn.classList.remove('hidden');
       signupBtn.classList.remove('hidden');
       userInfoDiv.classList.add('hidden');
       welcomeMsg.innerText = '';
+      if (homeLink) homeLink.style.display = 'none';
+      if (feedLink) feedLink.style.display = 'none';
     }
   }
 
