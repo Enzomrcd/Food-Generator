@@ -126,23 +126,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentUser = sessionStorage.getItem('currentUser');
     const homeLink = document.querySelector('[data-section="home-section"]')?.parentElement;
     const feedLink = document.querySelector('[data-section="feed-section"]')?.parentElement;
+    const donateLink = document.querySelector('[data-section="donate-section"]')?.parentElement;
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
 
     if (currentUser) {
-      loginBtn.classList.add('hidden');
-      signupBtn.classList.add('hidden');
-      userInfoDiv.classList.remove('hidden');
-      welcomeMsg.innerText = `Welcome, ${currentUser}`;
-      if (homeLink) homeLink.style.display = 'block';
-      if (feedLink) feedLink.style.display = 'block';
+        loginBtn.classList.add('hidden');
+        signupBtn.classList.add('hidden');
+        userInfoDiv.classList.remove('hidden');
+        welcomeMsg.innerText = `Welcome, ${currentUser}`;
+        if (homeLink) homeLink.style.display = 'block';
+        if (feedLink) feedLink.style.display = 'block';
+        if (hamburgerMenu) hamburgerMenu.style.display = 'block';
     } else {
-      loginBtn.classList.remove('hidden');
-      signupBtn.classList.remove('hidden');
-      userInfoDiv.classList.add('hidden');
-      welcomeMsg.innerText = '';
-      if (homeLink) homeLink.style.display = 'none';
-      if (feedLink) feedLink.style.display = 'none';
+        loginBtn.classList.remove('hidden');
+        signupBtn.classList.remove('hidden');
+        userInfoDiv.classList.add('hidden');
+        welcomeMsg.innerText = '';
+        if (homeLink) homeLink.style.display = 'none';
+        if (feedLink) feedLink.style.display = 'none';
+        if (hamburgerMenu) hamburgerMenu.style.display = 'none';
     }
-  }
+
+    if (donateLink) donateLink.style.display = 'block';
+}
 
   // Initialize UI on page load
   updateAuthUI();
