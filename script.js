@@ -49,12 +49,13 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            // Remove active class from all links and content sections
+            const sectionId = this.getAttribute('data-section');
+            if (!sectionId) return;
+
             navLinks.forEach(l => l.classList.remove('active'));
             document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
             // Set active link and show corresponding section
             this.classList.add('active');
-            const sectionId = this.getAttribute('data-section');
             const targetSection = document.getElementById(sectionId);
             if (targetSection) {
                 targetSection.classList.add('active');
@@ -427,9 +428,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
-    
+
     function formatDietName(diet) {
         return diet.split('-').map(word => capitalizeFirstLetter(word)).join('-');
     }
 });
-                    
